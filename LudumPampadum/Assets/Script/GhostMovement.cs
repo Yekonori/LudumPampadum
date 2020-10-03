@@ -49,7 +49,8 @@ public class GhostMovement : MonoBehaviour
             _listPoints = listP;
         }
 
-        _canWalk = true;
+        //_canWalk = true;
+
     }
 
     private void UpdatePathNode()
@@ -72,5 +73,13 @@ public class GhostMovement : MonoBehaviour
         }
     }
 
+    public void Launch()
+    {
+        Debug.Log("bla");
+        _currentNode = 0;
+        transform.position = _listPoints[_currentNode];
+
+        _canWalk = true;
+    }
     #endregion
 }

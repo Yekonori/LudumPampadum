@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     #region Fields
 
     [SerializeField] private List<PlayerMovement> players;
+    [SerializeField] private List<GhostMovement> ghosts;
 
     #endregion
 
@@ -61,16 +62,38 @@ public class GameManager : MonoBehaviour
     private void LaunchMovement()
     {
         GetAllPlayers();
+        
 
-        foreach(PlayerMovement player in players)
+        foreach (PlayerMovement player in players)
         {
             GhostMovement ghost = Instantiate(ghostPrefab, world);
             ghost.SetListNodes(player.ListPoints);
-
+            ghosts.Add(ghost);
             player.Launch();
+        }
+
+        //GetAllGhosts();
+        foreach (GhostMovement ghost in ghosts)
+        {
+            ghost.Launch();
         }
     }
 
+    #endregion
+
+    #region Ghosts
+    private void GetAllGhosts()
+    {
+        List<GhostMovement> ghosts = new List<GhostMovement>();
+
+        List<GameObject> ghostsGO = GameObject.FindGameObjectsWithTag("Ghost").ToList();
+        
+        foreach(GameObject ghost in ghostsGO)
+        {
+            ghosts.Add(ghost.GetComponent<GhostMovement>());
+        }
+
+    }
     #endregion
 
     #region Debug Mode
