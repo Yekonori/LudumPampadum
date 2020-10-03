@@ -16,18 +16,12 @@ public class GhostMovement : MonoBehaviour
 
     #region Fields
 
-    int _currentNode = 0;
+    int _currentNode = 1;
     private bool _canWalk;
 
     #endregion
 
     #region Unity Methods
-
-    private void Start()
-    {
-        //SetListNodes(...);
-        direction = (_listPoints[0] - transform.position).normalized;
-    }
 
     private void FixedUpdate()
     {
@@ -44,13 +38,14 @@ public class GhostMovement : MonoBehaviour
 
     public void SetListNodes(List<Vector3> listP)
     {
+        _currentNode = 1;
+
         if (_listPoints == null)
         {
             _listPoints = listP;
+
+            direction = (_listPoints[_currentNode] - transform.position).normalized;
         }
-
-        //_canWalk = true;
-
     }
 
     private void UpdatePathNode()
@@ -73,13 +68,31 @@ public class GhostMovement : MonoBehaviour
         }
     }
 
+    #endregion
+
     public void Launch()
     {
-        Debug.Log("bla");
         _currentNode = 0;
         transform.position = _listPoints[_currentNode];
 
         _canWalk = true;
     }
-    #endregion
+
+    public void ResetNodes()
+    {
+        _currentNode = 0;
+        transform.position = _listPoints[_currentNode];
+
+        _canWalk = false;
+    }
+
+    public void Stop()
+    {
+        _canWalk = false;
+    }
+
+    public void Resume()
+    {
+        _canWalk = true;
+    }
 }

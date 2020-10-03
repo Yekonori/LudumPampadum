@@ -59,6 +59,8 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
+    #region PathNode
+
     public void CastRayWorld()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -66,15 +68,16 @@ public class PlayerMovement : MonoBehaviour
 
         RaycastHit hit;
         Physics.Raycast(ray, out hit);
+
         if (hit.rigidbody != null)
         {
             _listPoints.Add(new Vector3(hit.point.x, 0f, hit.point.z));
 
             _isPreviewWalking = true;
             direction = (_listPoints[_currentNode] - transform.position).normalized;
-        }
 
-        //transform.position = positions[positions.Count - 1];
+            OrganiseMovements();
+        }
     }
 
     private void UpdatePathNode()
@@ -90,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 _isPreviewWalking = false;
+                GameManager.Get.StopGhosts();
             }
 
             //transform.LookAt(_pathNodes[_currentNode]);
@@ -109,5 +113,25 @@ public class PlayerMovement : MonoBehaviour
     {
         _listPoints = new List<Vector3>();
         _listPoints.Add(transform.position);
+
+        GameManager.Get.ResetGhosts();
     }
+
+    #endregion
+
+    #region Ghosts Gestion
+
+    private void OrganiseMovements()
+    {
+        if (_listPoints.Count < 2)
+        {
+            GameManager.Get.LaunchGhosts();
+        }
+        else
+        {
+            GameManager.Get.ResumeGhosts();
+        }
+    }
+
+    #endregion
 }
