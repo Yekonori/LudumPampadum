@@ -6,12 +6,15 @@ using UnityEngine.Events;
 [RequireComponent(typeof(BoxCollider))]
 public class TriggerEvent : MonoBehaviour
 {
-    [SerializeField]
-    UnityEvent OnEnter;
-    [SerializeField]
-    UnityEvent OnExit;
-    [SerializeField]
-    bool onlyOnce;
+    #region Script Parameters
+
+    [SerializeField] private UnityEvent OnEnter;
+    [SerializeField] private UnityEvent OnExit;
+    [SerializeField] private bool onlyOnce;
+
+    #endregion
+
+    #region Unity Methods
 
     private void OnTriggerEnter(Collider other)
     {
@@ -36,4 +39,6 @@ public class TriggerEvent : MonoBehaviour
             }
         }
     }
+
+    #endregion
 }

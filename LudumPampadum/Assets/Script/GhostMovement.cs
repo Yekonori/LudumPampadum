@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class GhostMovement : MonoBehaviour
 {
-    [SerializeField] float speed = 10;
-    int currentNode = 0;
-    [SerializeField] Vector3 direction;
-    [SerializeField] float _maxDistance = 1.0f;
+    #region Script Parameters
 
-    [SerializeField]
+    [SerializeField] float speed = 10;
+    [SerializeField] Vector3 direction;
+    [SerializeField] float maxDistance = 1.0f;
+
     private List<Vector3> _listPoints;
 
     public List<Vector3> ListPoints
@@ -18,19 +18,31 @@ public class GhostMovement : MonoBehaviour
         set { _listPoints = value; }
     }
 
-    // Start is called before the first frame update
+    #endregion
+
+    #region Fields
+
+    int _currentNode = 0;
+
+    #endregion
+
+    #region Unity Methods
+
     void Start()
     {
         //SetListNodes(...);
         direction = (_listPoints[0] - transform.position).normalized;
     }
 
-    // Update is called once per frame
     void Update()
     {
         transform.position += direction * speed * Time.deltaTime;
         UpdatePathNode();
     }
+
+    #endregion
+
+    #region Nodes
 
     void SetListNodes(List<Vector3> listP)
     {
@@ -42,16 +54,20 @@ public class GhostMovement : MonoBehaviour
 
     void UpdatePathNode()
     {
-        float distance = Vector3.Distance(transform.position, _listPoints[currentNode]);
+        float distance = Vector3.Distance(transform.position, _listPoints[_currentNode]);
         Debug.Log(distance);
-        if (distance < _maxDistance)
+
+        if (distance < maxDistance)
         {
-            if (currentNode != _listPoints.Count -1)
+            if (_currentNode != _listPoints.Count -1)
             {
-                currentNode++;
+                _currentNode++;
             }
+
             //transform.LookAt(_pathNodes[_currentNode]);
-            direction = (_listPoints[currentNode] - transform.position).normalized;
+            direction = (_listPoints[_currentNode] - transform.position).normalized;
         }
     }
+
+    #endregion
 }
