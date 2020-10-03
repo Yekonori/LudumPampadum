@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using UnityEngine.Rendering;
 
 public class GameManager : MonoBehaviour
 {
     #region Script Parameters
 
     [Header("Main Canvas")]
+
+    [SerializeField] private PlayerMovement playerPrefab;
 
     [SerializeField] private GhostMovement ghostPrefab;
     [SerializeField] private Transform world;
@@ -24,6 +27,12 @@ public class GameManager : MonoBehaviour
 
     #region Fields
 
+    private static GameManager _instance;
+    public static GameManager Get
+    {
+        get { return _instance; }
+    }
+
     [SerializeField] private List<PlayerMovement> players;
     [SerializeField] private List<GhostMovement> ghosts;
 
@@ -33,6 +42,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        if (_instance != this)
+        {
+            _instance = this;
+        }
+
         startButton.onClick.AddListener(LaunchMovement);
 
         if (onDebugMode)
@@ -45,55 +59,61 @@ public class GameManager : MonoBehaviour
 
     #region Players
 
-    private void GetAllPlayers()
+    private void LaunchPlayer()
     {
-        players = new List<PlayerMovement>();
+        GhostMovement ghost = Instantiate(ghostPrefab, world);
+        ghost.SetListNodes(playerPrefab.ListPoints);
 
-        List<GameObject> playersGo = GameObject.FindGameObjectsWithTag("Player").ToList();
-
-        foreach(GameObject player in playersGo)
-        {
-            players.Add(player.GetComponent<PlayerMovement>());
-        }
-
-
+        ghosts.Add(ghost);
+        
+        playerPrefab.Launch();
     }
 
-    private void LaunchMovement()
+    #endregion
+
+    #region Ghosts
+
+    public void LaunchGhosts()
     {
-        GetAllPlayers();
-        
-
-        foreach (PlayerMovement player in players)
-        {
-            GhostMovement ghost = Instantiate(ghostPrefab, world);
-            ghost.SetListNodes(player.ListPoints);
-            ghosts.Add(ghost);
-            player.Launch();
-        }
-
-        //GetAllGhosts();
         foreach (GhostMovement ghost in ghosts)
         {
             ghost.Launch();
         }
     }
 
+    public void StopGhosts()
+    {
+        foreach (GhostMovement ghost in ghosts)
+        {
+            ghost.Stop();
+        }
+    }
+
+    public void ResumeGhosts()
+    {
+        foreach (GhostMovement ghost in ghosts)
+        {
+            ghost.Resume();
+        }
+    }
+
+    public void ResetGhosts()
+    {
+        foreach (GhostMovement ghost in ghosts)
+        {
+            ghost.ResetNodes();
+        }
+    }
+
     #endregion
 
-    #region Ghosts
-    private void GetAllGhosts()
+    #region Movement
+
+    private void LaunchMovement()
     {
-        List<GhostMovement> ghosts = new List<GhostMovement>();
-
-        List<GameObject> ghostsGO = GameObject.FindGameObjectsWithTag("Ghost").ToList();
-        
-        foreach(GameObject ghost in ghostsGO)
-        {
-            ghosts.Add(ghost.GetComponent<GhostMovement>());
-        }
-
+        LaunchPlayer();
     }
+
     #endregion
 
     #region Debug Mode
