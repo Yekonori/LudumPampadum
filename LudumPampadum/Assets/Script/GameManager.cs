@@ -10,13 +10,18 @@ public class GameManager : MonoBehaviour
 {
     #region Script Parameters
 
-    [Header("Main Canvas")]
+    [Header("Players & Ghost")]
 
     [SerializeField] private PlayerMovement playerPrefab;
 
     [SerializeField] private GhostMovement ghostPrefab;
     [SerializeField] private Transform world;
     [SerializeField] private Button startButton;
+
+    [Header("Timer")]
+
+    [SerializeField] private float turnTimer;
+    [SerializeField] private Text timerText;
 
     [Header("Debug Mode")]
 
@@ -33,19 +38,28 @@ public class GameManager : MonoBehaviour
         get { return _instance; }
     }
 
-    [SerializeField] private List<PlayerMovement> players;
-    [SerializeField] private List<GhostMovement> ghosts;
+    private List<GhostMovement> ghosts;
+
+    private float _currentTurnTimer;
+    private bool _canTimerRun;
 
     #endregion
 
     #region Unity Methods
 
-    private void Start()
+    private void Awake()
     {
         if (_instance != this)
         {
             _instance = this;
         }
+    }
+
+    private void Start()
+    {
+        InitTimer();
+
+        ghosts = new List<GhostMovement>();
 
         startButton.onClick.AddListener(LaunchMovement);
 
@@ -55,17 +69,26 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        if (_canTimerRun)
+        {
+            _currentTurnTimer -= Time.fixedDeltaTime;
+
+            UpdateTimer();
+
+            CheckEndTimer();
+        }
+    }
+
     #endregion
 
     #region Players
 
     private void LaunchPlayer()
     {
-        GhostMovement ghost = Instantiate(ghostPrefab, world);
-        ghost.SetListNodes(playerPrefab.ListPoints);
+        CreateGhost();
 
-        ghosts.Add(ghost);
-        
         playerPrefab.Launch();
     }
 
@@ -73,8 +96,18 @@ public class GameManager : MonoBehaviour
 
     #region Ghosts
 
+    private void CreateGhost()
+    {
+        GhostMovement ghost = Instantiate(ghostPrefab, playerPrefab.ListPoints[0], Quaternion.identity, world);
+        ghost.SetListNodes(playerPrefab.ListPoints);
+
+        ghosts.Add(ghost);
+    }
+
     public void LaunchGhosts()
     {
+        StartTimer();
+
         foreach (GhostMovement ghost in ghosts)
         {
             ghost.Launch();
@@ -83,6 +116,8 @@ public class GameManager : MonoBehaviour
 
     public void StopGhosts()
     {
+        StopTimer();
+
         foreach (GhostMovement ghost in ghosts)
         {
             ghost.Stop();
@@ -91,6 +126,8 @@ public class GameManager : MonoBehaviour
 
     public void ResumeGhosts()
     {
+        StartTimer();
+
         foreach (GhostMovement ghost in ghosts)
         {
             ghost.Resume();
@@ -105,6 +142,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public bool HasGhosts()
+    {
+        return ghosts.Count >= 1 ? true : false;
+    }
+
     #endregion
 
     #region Movement
@@ -112,6 +154,56 @@ public class GameManager : MonoBehaviour
     private void LaunchMovement()
     {
         LaunchPlayer();
+        InitTimer();
+    }
+
+    private void StopAllElements()
+    {
+        StopGhosts();
+
+        LaunchPlayer();
+
+        InitTimer();
+    }
+
+    #endregion
+
+    #region Timer
+
+    private void InitTimer()
+    {
+        _currentTurnTimer = turnTimer;
+        UpdateTimer();
+    }
+
+    public void StartTimer()
+    {
+        _canTimerRun = true;
+    }
+
+    public void StopTimer()
+    {
+        _canTimerRun = false;
+    }
+
+    private void UpdateTimer()
+    {
+        timerText.text = string.Format("Timer : {0}", Mathf.RoundToInt(_currentTurnTimer).ToString());
+    }
+
+    private void CheckEndTimer()
+    {
+        if (_currentTurnTimer <= 0)
+        {
+            _currentTurnTimer = 0;
+
+            EndTimer();
+        }
+    }
+
+    private void EndTimer()
+    {
+        StopAllElements();
     }
 
     #endregion
