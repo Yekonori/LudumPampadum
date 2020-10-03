@@ -34,7 +34,7 @@ public class GhostMovement : MonoBehaviour
         direction = (_listPoints[0] - transform.position).normalized;
     }
 
-    void Update()
+    private void FixedUpdate()
     {
         transform.position += direction * speed * Time.deltaTime;
         UpdatePathNode();
