@@ -12,23 +12,18 @@ public class GhostMovement : MonoBehaviour
 
     private List<Vector3> _listPoints;
 
-    public List<Vector3> ListPoints
-    {
-        get { return _listPoints; }
-        set { _listPoints = value; }
-    }
-
     #endregion
 
     #region Fields
 
     int _currentNode = 0;
+    private bool _canWalk;
 
     #endregion
 
     #region Unity Methods
 
-    void Start()
+    private void Start()
     {
         //SetListNodes(...);
         direction = (_listPoints[0] - transform.position).normalized;
@@ -36,32 +31,40 @@ public class GhostMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.position += direction * speed * Time.deltaTime;
-        UpdatePathNode();
+        if (_canWalk)
+        {
+            transform.position += direction * speed * Time.deltaTime;
+            UpdatePathNode();
+        }
     }
 
     #endregion
 
     #region Nodes
 
-    void SetListNodes(List<Vector3> listP)
+    public void SetListNodes(List<Vector3> listP)
     {
         if (_listPoints == null)
         {
             _listPoints = listP;
         }
+
+        _canWalk = true;
     }
 
-    void UpdatePathNode()
+    private void UpdatePathNode()
     {
         float distance = Vector3.Distance(transform.position, _listPoints[_currentNode]);
-        Debug.Log(distance);
 
         if (distance < maxDistance)
         {
             if (_currentNode != _listPoints.Count -1)
             {
                 _currentNode++;
+            }
+            else
+            {
+                _canWalk = false;
             }
 
             //transform.LookAt(_pathNodes[_currentNode]);

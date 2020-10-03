@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
 
     [Header("Main Canvas")]
 
+    [SerializeField] private GhostMovement ghostPrefab;
+    [SerializeField] private Transform world;
     [SerializeField] private Button startButton;
 
     [Header("Debug Mode")]
@@ -59,6 +61,14 @@ public class GameManager : MonoBehaviour
     private void LaunchMovement()
     {
         GetAllPlayers();
+
+        foreach(PlayerMovement player in players)
+        {
+            GhostMovement ghost = Instantiate(ghostPrefab, world);
+            ghost.SetListNodes(player.ListPoints);
+
+            player.Launch();
+        }
     }
 
     #endregion
