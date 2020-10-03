@@ -244,7 +244,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28941db14f8fd0644a51fb8895ae05d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 4.5
+  speed: 5
+  _maxDistance: 1
+  direction: {x: 0, y: 0, z: 0}
 --- !u!1 &162932102
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,6 +291,7 @@ GameObject:
   - component: {fileID: 339785476}
   - component: {fileID: 339785475}
   - component: {fileID: 339785478}
+  - component: {fileID: 339785479}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -392,6 +395,25 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &339785479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 339785474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 089ca3829fa2e9d419045fc66f48aea4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothCamera: 2
+  cameraOffset: {x: 0, y: 12.45, z: -28.36}
+  clampX: {x: -10, y: 10}
+  clampZ: {x: -10, y: 10}
+  focusTarget: {fileID: 76656520}
+  focusTargetLock: {fileID: 0}
+  focusPriority: {fileID: 0}
 --- !u!1 &572042625
 GameObject:
   m_ObjectHideFlags: 0
@@ -689,8 +711,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fab7e794db13bd4abb0045dc1c98ed4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ghostPrefab: {fileID: 0}
+  world: {fileID: 0}
+  startButton: {fileID: 0}
   onDebugMode: 1
   reloadButton: {fileID: 1116364720}
+  players: []
 --- !u!4 &815670652
 Transform:
   m_ObjectHideFlags: 0
