@@ -38,7 +38,7 @@ public class AudioManager : MonoBehaviour
 
         foreach (Sound s in sounds)
         {
-            s.source = gameObject.AddComponent<AudioSource>();
+            s.source = gameObject.AddComponent<AudioSource>(); // ça c'est pas bien c'est pas performant du tout
             s.source.clip = s.clip;
             if (s.isMusic)
                 s.source.outputAudioMixerGroup = MusicMixer;
