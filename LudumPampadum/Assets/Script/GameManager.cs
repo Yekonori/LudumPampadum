@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     [Header("Timer")]
 
     [SerializeField] private float turnTimer;
-    [SerializeField] private Text timerText;
+    [SerializeField] private UIManager uiManager;
 
     [Header("Debug Mode")]
 
@@ -188,7 +188,8 @@ public class GameManager : MonoBehaviour
 
     private void UpdateTimer()
     {
-        timerText.text = string.Format("Timer : {0}", Mathf.RoundToInt(_currentTurnTimer).ToString());
+        uiManager.DrawTimer(_currentTurnTimer, turnTimer);
+       // timerText.text = string.Format("Timer : {0}", Mathf.RoundToInt(_currentTurnTimer).ToString());
     }
 
     private void CheckEndTimer()
