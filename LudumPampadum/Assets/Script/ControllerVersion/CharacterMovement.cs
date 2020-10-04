@@ -66,10 +66,12 @@ public class CharacterMovement : MonoBehaviour
 
     float animationSpeed = 1f;
     float recordTime = 0f;
+    Camera camera;
 
     private void Start()
     {
         recordInterval /= 60f;
+        camera = Camera.main;
     }
     private void Update()
     {
@@ -93,9 +95,19 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Move Character relative to camera position
+    /// </summary>
     public void MoveCharacterWorld(float directionX, float directionZ)
     {
-        Vector3 move = new Vector3(directionX, 0, directionZ);
+        var forward = camera.transform.forward;
+        var right = camera.transform.right;
+        forward.y = 0;
+        right.y = 0;
+        forward.Normalize();
+        right.Normalize();
+
+        Vector3 move = right * directionX + forward * directionZ;
         move.Normalize();
         move *= (speed * Mathf.Abs(animationSpeed));
         characterController.Move(move * Time.deltaTime);
@@ -109,6 +121,7 @@ public class CharacterMovement : MonoBehaviour
             camilleModel.GetComponent<Animator>().SetBool("isWalking", true);
         }
     }
+
 
     public void SetPosition(Vector3 pos)
     {
