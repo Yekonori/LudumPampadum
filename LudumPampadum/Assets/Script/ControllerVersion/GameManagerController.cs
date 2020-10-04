@@ -104,21 +104,24 @@ public class GameManagerController : MonoBehaviour
     {
         if(canPlay == true)
         {
-            if(Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0))
                 CastRayWorld();
-            input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            if (input == Vector2.zero)
-            {
-                StopTimer();
-            }
             else
             {
-                StartTimer();
-                characterMovements[characterMovements.Count - 1].MoveCharacterWorld(input.x, input.y);
-                characterMovements[characterMovements.Count - 1].MoveAuto = false;
+                input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+                if (input == Vector2.zero && characterMovements[characterMovements.Count - 1].MoveAuto == false)
+                {
+                    StopTimer();
+                }
+                else if (input != Vector2.zero)
+                {
+                    StartTimer();
+                    characterMovements[characterMovements.Count - 1].MoveCharacterWorld(input.x, input.y);
+                    characterMovements[characterMovements.Count - 1].MoveAuto = false;
+                }
+                if (Input.GetButtonDown("Fire3"))
+                    RewindTime();
             }
-            if (Input.GetButtonDown("Fire3"))
-                RewindTime();
         }
     }
 
@@ -128,7 +131,7 @@ public class GameManagerController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hit;
-        if(Physics.Raycast(ray, out hit))
+        if(Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
         {
             characterMovements[characterMovements.Count - 1].MoveAutoTo(new Vector3(hit.point.x, 0, hit.point.z));
             StartTimer();
