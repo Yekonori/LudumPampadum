@@ -19,6 +19,7 @@ public class GameManagerController : MonoBehaviour
     [Header("Timer")]
 
     [SerializeField] private float turnTimer;
+    [SerializeField] private float fastForwardMultiplier = 1f;
     [SerializeField] private UIManager uiManager;
 
     [Header("Feedback")]
@@ -127,7 +128,7 @@ public class GameManagerController : MonoBehaviour
 
                 if (Input.GetButtonDown("Fire1"))
                 {
-                    StartTimer();
+                    StartTimer();                  
                 }
                 else if (Input.GetButtonUp("Fire1"))
                     StopTimer();
