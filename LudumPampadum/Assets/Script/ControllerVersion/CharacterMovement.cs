@@ -36,6 +36,15 @@ public class CharacterMovement : MonoBehaviour
         set { positions = value; }
     }
 
+    private bool moveAuto = true;
+    public bool MoveAuto
+    {
+        get { return moveAuto; }
+        set { moveAuto = value; }
+    }
+
+    Vector3 mousePosition;
+
     private bool canRecord = true;
     public bool CanRecord
     {
@@ -59,10 +68,16 @@ public class CharacterMovement : MonoBehaviour
     }
     private void Update()
     {
-        /*if(isPlayable == true)
+        if(moveAuto == true)
         {
-            MoveCharacterWorld(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        }*/
+            MoveCharacterWorld(mousePosition.x - transform.position.x, mousePosition.z - transform.position.z);
+            float distance = Vector3.Distance(transform.position, mousePosition);
+            if (distance < maxDistance)
+            {
+                moveAuto = false;
+                GameManager.Get.StopTimer();
+            }
+        }
         if (canRecord == true)
         {
             RecordPosition();
@@ -77,8 +92,8 @@ public class CharacterMovement : MonoBehaviour
     {
         Vector3 move = new Vector3(directionX, 0, directionZ);
         move.Normalize();
-        move *= speed;
-        characterController.Move((move * animationSpeed * Time.deltaTime));
+        move *= (speed * Mathf.Abs(animationSpeed));
+        characterController.Move(move * Time.deltaTime);
     }
 
     public void SetPosition(Vector3 pos)
@@ -87,6 +102,23 @@ public class CharacterMovement : MonoBehaviour
         characterController.transform.position = pos;
         characterController.enabled = true;
     }
+
+
+
+    public void MoveAutoTo(Vector3 pos)
+    {
+        mousePosition = pos;
+        moveAuto = true;
+    }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -119,16 +151,16 @@ public class CharacterMovement : MonoBehaviour
 
     public void PlayReplay()
     {
+        currentNode = 0;
         canRecord = false;
         inReplay = true;
     }
 
     private void ReplayUpdate()
     {
-        Vector3 direction = (positions[currentNode] - transform.position).normalized  * Mathf.Sign(animationSpeed);
+        Vector3 direction = (positions[currentNode] - transform.position).normalized;
         MoveCharacterWorld(direction.x, direction.z);
         float distance = Vector3.Distance(transform.position, positions[currentNode]);
-
         if (distance < maxDistance)
         {
             currentNode += (int)(1 * Mathf.Sign(animationSpeed));
