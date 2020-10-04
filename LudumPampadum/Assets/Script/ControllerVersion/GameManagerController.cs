@@ -14,17 +14,15 @@ public class GameManagerController : MonoBehaviour
 
     [SerializeField] private CharacterMovement prefab;
     [SerializeField] private Transform world;
-    [SerializeField] private Button startButton;
+    [SerializeField] private int maxGhost;
 
     [Header("Timer")]
 
     [SerializeField] private float turnTimer;
     [SerializeField] private UIManager uiManager;
 
-    [Header("Debug Mode")]
-
-    [SerializeField] private bool onDebugMode;
-    [SerializeField] private Button reloadButton;
+    [Header("Feedback")]
+    [SerializeField] Animator rewindFeedback;
 
     private bool canPlay = true;
     List<CharacterMovement> characterMovements = new List<CharacterMovement>();
@@ -46,6 +44,8 @@ public class GameManagerController : MonoBehaviour
     private float _currentTurnTimer;
     private bool _canTimerRun;
 
+    int layerMask = 1 << 0;
+
     #endregion
 
     #region Unity Methods
@@ -62,15 +62,12 @@ public class GameManagerController : MonoBehaviour
     {
         InitTimer();
 
-        //characterMovements = new List<GhostMovement>();
-        characterMovements.Add(prefab);
+        SetUIButtons();
 
-        startButton.onClick.AddListener(RewindTime);
+        characterMovements.Add(Instantiate(prefab, prefab.transform.position, Quaternion.identity, world));
+        prefab.gameObject.SetActive(false);
 
-        if (onDebugMode)
-        {
-            SetDebugMode();
-        }
+        uiManager.DrawEntity(characterMovements.Count - 1);
     }
 
     private void Update()
@@ -84,34 +81,52 @@ public class GameManagerController : MonoBehaviour
         }
     }
 
-   /* private void FixedUpdate()
-    {
-        if (_canTimerRun)
-        {
-            _currentTurnTimer -= Time.fixedDeltaTime;
-            UpdateTimer();
-            CheckEndTimer();
-        }
-    }*/
+    /* private void FixedUpdate()
+     {
+         if (_canTimerRun)
+         {
+             _currentTurnTimer -= Time.fixedDeltaTime;
+             UpdateTimer();
+             CheckEndTimer();
+         }
+     }*/
+
 
     private void UpdateController()
     {
         if(canPlay == true)
         {
-            input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            if (input == Vector2.zero)
-            {
-                StopTimer();
-            }
+            if (Input.GetMouseButtonDown(0))
+                CastRayWorld();
             else
             {
-                StartTimer();
-                characterMovements[characterMovements.Count - 1].MoveCharacterWorld(input.x, input.y);
+                input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+                if (input == Vector2.zero && characterMovements[characterMovements.Count - 1].MoveAuto == false)
+                {
+                    StopTimer();
+                }
+                else if (input != Vector2.zero)
+                {
+                    StartTimer();
+                    characterMovements[characterMovements.Count - 1].MoveCharacterWorld(input.x, input.y);
+                    characterMovements[characterMovements.Count - 1].MoveAuto = false;
+                }
+                if (Input.GetButtonDown("Fire3"))
+                    RewindTime();
             }
+        }
+    }
 
-            if (Input.GetButtonDown("Fire3"))
-                RewindTime();
 
+    private void CastRayWorld()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        RaycastHit hit;
+        if(Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+        {
+            characterMovements[characterMovements.Count - 1].MoveAutoTo(new Vector3(hit.point.x, 0, hit.point.z));
+            StartTimer();
         }
     }
 
@@ -132,9 +147,15 @@ public class GameManagerController : MonoBehaviour
 
     private void CreatePlayer()
     {
+        CharacterMovement currentPlayer = characterMovements[characterMovements.Count - 1];
+        currentPlayer.isAlixModel = true;
+        currentPlayer.UpdateModel();
+
         CharacterMovement newPlayer = Instantiate(prefab, characterMovements[0].Positions[0], Quaternion.identity, world);
-        //newPlayer.gameObject.SetActive(true);
+        newPlayer.gameObject.SetActive(true);
         characterMovements.Add(newPlayer);
+
+        uiManager.DrawEntity(characterMovements.Count - 1);
     }
 
     /*public void LaunchGhosts()
@@ -243,12 +264,12 @@ public class GameManagerController : MonoBehaviour
 
     #endregion
 
-    #region Debug Mode
+    #region Buttons
 
-    private void SetDebugMode()
+    private void SetUIButtons()
     {
-        reloadButton.gameObject.SetActive(true);
-        reloadButton.onClick.AddListener(ReloadScene);
+        uiManager.startButton.onClick.AddListener(RewindTime);
+        uiManager.reloadButton.onClick.AddListener(ReloadScene);
     }
 
     private void ReloadScene()
@@ -270,26 +291,41 @@ public class GameManagerController : MonoBehaviour
 
     public void RewindTime()
     {
-        canPlay = false;
-        characterMovements[characterMovements.Count - 1].RewindReplay();
-        StartCoroutine(RewindTimeCoroutine());
+        if (canPlay == true)
+        {
+            canPlay = false;
+            characterMovements[characterMovements.Count - 1].RewindReplay();
+            characterMovements[characterMovements.Count - 1].gameObject.layer = 9;
+            StartCoroutine(RewindTimeCoroutine());
+        }
     }
 
     private IEnumerator RewindTimeCoroutine()
     {
-        float animationSpeed = -2f;
+        StopTimer();
+        float animationSpeed = 0f;
+        rewindFeedback.SetBool("Rewind", true);
         SetCharactersMovements(animationSpeed);
         while (_currentTurnTimer < turnTimer)
         {
-            /*if (animationSpeed > -3)
-                animationSpeed -= 0.05f;*/
-            _currentTurnTimer += Time.deltaTime * -animationSpeed;
+            if (animationSpeed > -2)
+            {
+                animationSpeed -= 0.02f;
+                SetCharactersMovements(animationSpeed);
+            }
+            _currentTurnTimer += Time.deltaTime * Mathf.Abs(animationSpeed);
             UpdateTimer();
             yield return null;
         }
+        rewindFeedback.SetBool("Rewind", false);
         SetCharactersMovements(1);
         characterMovements[characterMovements.Count - 1].PlayReplay();
-        CreatePlayer();
+
+        if(characterMovements.Count - 1 < maxGhost)
+        {
+            CreatePlayer();
+        }
+
         canPlay = true;
     }
 

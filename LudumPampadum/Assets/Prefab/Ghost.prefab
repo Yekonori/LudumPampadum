@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 1046889049996998913}
   - component: {fileID: 1046889049996998912}
   - component: {fileID: 1046889049996998919}
+  - component: {fileID: -1319549485226071053}
+  - component: {fileID: 8858348462659391883}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Ghost
@@ -110,6 +112,42 @@ MonoBehaviour:
   speed: 5
   direction: {x: 0, y: 0, z: 0}
   maxDistance: 1
+--- !u!143 &-1319549485226071053
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1046889049996998918}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8858348462659391883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1046889049996998918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d14cfae28528c914e961e9103d766bf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterController: {fileID: -1319549485226071053}
+  speed: 10
+  joystick: 0.5
+  recordInterval: 120
+  maxDistance: 0.5
+  positions: []
 --- !u!1001 &7837837417939816799
 PrefabInstance:
   m_ObjectHideFlags: 0
