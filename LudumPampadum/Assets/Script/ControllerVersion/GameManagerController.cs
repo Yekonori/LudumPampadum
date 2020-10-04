@@ -49,6 +49,8 @@ public class GameManagerController : MonoBehaviour
     private float _currentTurnTimer;
     private bool _canTimerRun;
 
+    int layerMask = 1 << 0;
+
     #endregion
 
     #region Unity Methods
@@ -87,20 +89,23 @@ public class GameManagerController : MonoBehaviour
         }
     }
 
-   /* private void FixedUpdate()
-    {
-        if (_canTimerRun)
-        {
-            _currentTurnTimer -= Time.fixedDeltaTime;
-            UpdateTimer();
-            CheckEndTimer();
-        }
-    }*/
+    /* private void FixedUpdate()
+     {
+         if (_canTimerRun)
+         {
+             _currentTurnTimer -= Time.fixedDeltaTime;
+             UpdateTimer();
+             CheckEndTimer();
+         }
+     }*/
+
 
     private void UpdateController()
     {
         if(canPlay == true)
         {
+            if(Input.GetMouseButtonDown(0))
+                CastRayWorld();
             input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             if (input == Vector2.zero)
             {
@@ -110,10 +115,23 @@ public class GameManagerController : MonoBehaviour
             {
                 StartTimer();
                 characterMovements[characterMovements.Count - 1].MoveCharacterWorld(input.x, input.y);
+                characterMovements[characterMovements.Count - 1].MoveAuto = false;
             }
             if (Input.GetButtonDown("Fire3"))
                 RewindTime();
+        }
+    }
 
+
+    private void CastRayWorld()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        RaycastHit hit;
+        if(Physics.Raycast(ray, out hit))
+        {
+            characterMovements[characterMovements.Count - 1].MoveAutoTo(new Vector3(hit.point.x, 0, hit.point.z));
+            StartTimer();
         }
     }
 
