@@ -21,6 +21,9 @@ public class GameManagerController : MonoBehaviour
     [SerializeField] private float turnTimer;
     [SerializeField] private UIManager uiManager;
 
+    [Header("Feedback")]
+    [SerializeField] Animator rewindFeedback;
+
     [Header("Debug Mode")]
 
     [SerializeField] private bool onDebugMode;
@@ -282,6 +285,7 @@ public class GameManagerController : MonoBehaviour
     {
         StopTimer();
         float animationSpeed = 0f;
+        rewindFeedback.SetBool("Rewind", true);
         SetCharactersMovements(animationSpeed);
         while (_currentTurnTimer < turnTimer)
         {
@@ -294,6 +298,7 @@ public class GameManagerController : MonoBehaviour
             UpdateTimer();
             yield return null;
         }
+        rewindFeedback.SetBool("Rewind", false);
         SetCharactersMovements(1);
         characterMovements[characterMovements.Count - 1].PlayReplay();
         CreatePlayer();
