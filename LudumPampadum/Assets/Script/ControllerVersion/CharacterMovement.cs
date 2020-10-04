@@ -98,7 +98,7 @@ public class CharacterMovement : MonoBehaviour
     /// <summary>
     /// Move Character relative to camera position
     /// </summary>
-    public void MoveCharacterWorld(float directionX, float directionZ)
+    public void MoveCharacterCamera(float directionX, float directionZ)
     {
         var forward = camera.transform.forward;
         var right = camera.transform.right;
@@ -113,6 +113,33 @@ public class CharacterMovement : MonoBehaviour
         characterController.Move(move * Time.deltaTime);
 
         transform.LookAt(this.transform.position + move);
+
+        if (isAlixModel)
+        {
+            alixModel.GetComponent<Animator>().SetBool("isWalking", true);
+        }
+        else
+        {
+            camilleModel.GetComponent<Animator>().SetBool("isWalking", true);
+        }
+    }
+
+    public void MoveCharacterWorld(float directionX, float directionZ)
+    {
+        Vector3 move = new Vector3(directionX, 0, directionZ);
+        move.Normalize();
+        move *= (speed * Mathf.Abs(animationSpeed));
+        characterController.Move(move * Time.deltaTime);
+
+        if(inReplay)
+        {
+            transform.LookAt(this.transform.position - move);
+        }
+        else
+        {
+            transform.LookAt(this.transform.position + move);
+        }
+        
 
         if (isAlixModel)
         {
@@ -155,7 +182,10 @@ public class CharacterMovement : MonoBehaviour
     }
 
 
-
+    public void ClearPosition()
+    {
+        positions.Clear();
+    }
 
 
 

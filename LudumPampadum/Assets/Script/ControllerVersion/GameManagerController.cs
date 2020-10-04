@@ -117,7 +117,7 @@ public class GameManagerController : MonoBehaviour
                 else if (input != Vector2.zero)
                 {
                     StartTimer();
-                    characterMovements[characterMovements.Count - 1].MoveCharacterWorld(input.x, input.y);
+                    characterMovements[characterMovements.Count - 1].MoveCharacterCamera(input.x, input.y);
                     characterMovements[characterMovements.Count - 1].MoveAuto = false;
                 }
                 if (Input.GetButtonDown("Fire3"))
@@ -332,11 +332,18 @@ public class GameManagerController : MonoBehaviour
         }
         rewindFeedback.SetBool("Rewind", false);
         SetCharactersMovements(1);
-        characterMovements[characterMovements.Count - 1].PlayReplay();
 
         if(characterMovements.Count - 1 < maxGhost)
         {
+            characterMovements[characterMovements.Count - 1].PlayReplay();
             CreatePlayer();
+        }
+        else
+        {
+            characterMovements[characterMovements.Count - 1].InReplay = false;
+            characterMovements[characterMovements.Count - 1].ClearPosition();
+
+            Debug.LogError("ClearPosition");
         }
 
         canPlay = true;
