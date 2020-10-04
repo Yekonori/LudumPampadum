@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scene/LevelEloi1.unity
+    guid: 83448a5be2f2d4b17a72cef31f8c4bbe
+  - enabled: 1
     path: Assets/Scene/MainMenu.unity
     guid: f7c4a61991c6d7f45b7bc90851143c35
   - enabled: 1
