@@ -76,7 +76,7 @@ public class GameManagerController : MonoBehaviour
         characterMovements.Add(Instantiate(prefab, prefab.transform.position, Quaternion.identity, world));
         prefab.gameObject.SetActive(false);
 
-        uiManager.DrawEntity(characterMovements.Count - 1);
+        uiManager.DrawEntity(maxGhost);
         camera.SetFocus(characterMovements[0].transform);
     }
 
@@ -175,7 +175,7 @@ public class GameManagerController : MonoBehaviour
         newPlayer.gameObject.SetActive(true);
         characterMovements.Add(newPlayer);
 
-        uiManager.DrawEntity(characterMovements.Count - 1);
+        uiManager.DrawEntity(maxGhost - (characterMovements.Count - 1));
 
         camera.SetFocus(newPlayer.transform);
     }
