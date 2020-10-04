@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8061807812141918083}
   - component: {fileID: 6363182652517722150}
   - component: {fileID: 9199279131222596844}
+  - component: {fileID: 9178678726235537271}
   m_Layer: 0
   m_Name: spawn_zone
   m_TagString: Untagged
@@ -80,3 +81,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &9178678726235537271
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7253781473671544121}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4628867701958877478, guid: cc869f0f57133784abbb3fb7302e7df7, type: 3}
