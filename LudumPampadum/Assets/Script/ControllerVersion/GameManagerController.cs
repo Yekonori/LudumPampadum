@@ -14,7 +14,7 @@ public class GameManagerController : MonoBehaviour
 
     [SerializeField] private CharacterMovement prefab;
     [SerializeField] private Transform world;
-    [SerializeField] private Button startButton;
+    [SerializeField] private int maxGhost;
 
     [Header("Timer")]
 
@@ -23,11 +23,6 @@ public class GameManagerController : MonoBehaviour
 
     [Header("Feedback")]
     [SerializeField] Animator rewindFeedback;
-
-    [Header("Debug Mode")]
-
-    [SerializeField] private bool onDebugMode;
-    [SerializeField] private Button reloadButton;
 
     private bool canPlay = true;
     List<CharacterMovement> characterMovements = new List<CharacterMovement>();
@@ -70,12 +65,6 @@ public class GameManagerController : MonoBehaviour
         //characterMovements = new List<GhostMovement>();
         characterMovements.Add(Instantiate(prefab, prefab.transform.position, Quaternion.identity, world));
         prefab.gameObject.SetActive(false);
-        startButton.onClick.AddListener(RewindTime);
-
-        if (onDebugMode)
-        {
-            SetDebugMode();
-        }
     }
 
     private void Update()
@@ -152,6 +141,10 @@ public class GameManagerController : MonoBehaviour
 
     private void CreatePlayer()
     {
+        CharacterMovement currentPlayer = characterMovements[characterMovements.Count - 1];
+        currentPlayer.isAlixModel = true;
+        currentPlayer.UpdateModel();
+
         CharacterMovement newPlayer = Instantiate(prefab, characterMovements[0].Positions[0], Quaternion.identity, world);
         newPlayer.gameObject.SetActive(true);
         characterMovements.Add(newPlayer);
@@ -263,12 +256,12 @@ public class GameManagerController : MonoBehaviour
 
     #endregion
 
-    #region Debug Mode
+    #region Buttons
 
-    private void SetDebugMode()
+    private void SetUIButtons()
     {
-        reloadButton.gameObject.SetActive(true);
-        reloadButton.onClick.AddListener(ReloadScene);
+        uiManager.startButton.onClick.AddListener(RewindTime);
+        uiManager.reloadButton.onClick.AddListener(ReloadScene);
     }
 
     private void ReloadScene()

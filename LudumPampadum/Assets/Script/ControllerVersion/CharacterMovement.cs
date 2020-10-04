@@ -18,6 +18,11 @@ public class CharacterMovement : MonoBehaviour
     float recordInterval = 5;
     [SerializeField] float maxDistance = 1.0f;
 
+    [Header("3D Models")]
+    [SerializeField] private GameObject camilleModel;
+    [SerializeField] private GameObject alixModel;
+    public bool isAlixModel;
+
     /*private bool isPlayable = true;
 
     public bool IsPlayable
@@ -75,7 +80,7 @@ public class CharacterMovement : MonoBehaviour
             if (distance < maxDistance)
             {
                 moveAuto = false;
-                GameManager.Get.StopTimer();
+                GameManagerController.Get.StopTimer();
             }
         }
         if (canRecord == true)
@@ -111,7 +116,19 @@ public class CharacterMovement : MonoBehaviour
         moveAuto = true;
     }
 
-
+    public void UpdateModel()
+    {
+        if (isAlixModel)
+        {
+            camilleModel.SetActive(false);
+            alixModel.SetActive(true);
+        }
+        else
+        {
+            camilleModel.SetActive(true);
+            alixModel.SetActive(false);
+        }
+    }
 
 
 
