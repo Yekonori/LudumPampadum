@@ -18,18 +18,25 @@ public class CharacterMovement : MonoBehaviour
     float recordInterval = 5;
     [SerializeField] float maxDistance = 1.0f;
 
-    bool isPlayable = true;
+    /*private bool isPlayable = true;
+
+    public bool IsPlayable
+    {
+        get { return isPlayable; }
+        set { isPlayable = value; }
+    }*/
 
     int currentNode = 0;
 
-    private List<Vector3> positions;
+    [SerializeField]
+    private List<Vector3> positions = new List<Vector3>();
     public List<Vector3> Positions
     {
         get { return positions; }
         set { positions = value; }
     }
 
-    private bool canRecord = false;
+    private bool canRecord = true;
     public bool CanRecord
     {
         get { return canRecord; }
@@ -46,24 +53,27 @@ public class CharacterMovement : MonoBehaviour
     float animationSpeed = 1f;
     float recordTime = 0f;
 
-
+    private void Start()
+    {
+        recordInterval /= 60f;
+    }
     private void Update()
     {
-        if(isPlayable == true)
+        /*if(isPlayable == true)
         {
             MoveCharacterWorld(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        }
+        }*/
         if (canRecord == true)
         {
             RecordPosition();
         }
-        if(inReplay == true)
+        else if(inReplay == true)
         {
             ReplayUpdate();
         }
     }
 
-    private void MoveCharacterWorld(float directionX, float directionZ)
+    public void MoveCharacterWorld(float directionX, float directionZ)
     {
         Vector3 move = new Vector3(directionX, 0, directionZ);
         move.Normalize();
@@ -85,7 +95,7 @@ public class CharacterMovement : MonoBehaviour
     {
         if(canRecord == true)
         {
-            recordTime -= Time.deltaTime;
+            recordTime -= Time.deltaTime * animationSpeed;
             if (recordTime <= 0)
             {
                 positions.Add(this.transform.position);
@@ -98,6 +108,13 @@ public class CharacterMovement : MonoBehaviour
     public void SetAnimationSpeed(float value)
     {
         animationSpeed = value;
+    }
+
+    public void RewindReplay()
+    {
+        currentNode = positions.Count - 1;
+        canRecord = false;
+        inReplay = true;
     }
 
     public void PlayReplay()
