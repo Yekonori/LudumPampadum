@@ -122,6 +122,8 @@ public class GameManagerController : MonoBehaviour
                 }
                 if (Input.GetButtonDown("Fire3"))
                     RewindTime();
+                if (Input.GetButtonDown("Fire2"))
+                    ReloadScene();
             }
         }
     }
