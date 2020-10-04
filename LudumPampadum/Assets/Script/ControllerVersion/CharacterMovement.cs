@@ -21,6 +21,7 @@ public class CharacterMovement : MonoBehaviour
     bool isPlayable = true;
 
     int currentNode = 0;
+
     private List<Vector3> positions;
     public List<Vector3> Positions
     {
@@ -35,6 +36,13 @@ public class CharacterMovement : MonoBehaviour
         set { canRecord = value; }
     }
 
+    private bool inReplay = false;
+    public bool InReplay
+    {
+        get { return inReplay; }
+        set { inReplay = value; }
+    }
+
     float animationSpeed = 1f;
     float recordTime = 0f;
 
@@ -45,7 +53,14 @@ public class CharacterMovement : MonoBehaviour
         {
             MoveCharacterWorld(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         }
-        RecordPosition();
+        if (canRecord == true)
+        {
+            RecordPosition();
+        }
+        if(inReplay == true)
+        {
+            ReplayUpdate();
+        }
     }
 
     private void MoveCharacterWorld(float directionX, float directionZ)
@@ -85,29 +100,31 @@ public class CharacterMovement : MonoBehaviour
         animationSpeed = value;
     }
 
-    public void PlayRecord()
+    public void PlayReplay()
     {
-        
+        canRecord = false;
+        inReplay = true;
     }
 
-    private IEnumerator RecordCoroutine()
+    private void ReplayUpdate()
     {
-        Vector3 direction = (positions[currentNode] - transform.position).normalized;
-        while (true)
-        {
-            float distance = Vector3.Distance(transform.position, positions[currentNode]);
+        Vector3 direction = (positions[currentNode] - transform.position).normalized  * Mathf.Sign(animationSpeed);
+        MoveCharacterWorld(direction.x, direction.z);
+        float distance = Vector3.Distance(transform.position, positions[currentNode]);
 
-            if (distance < maxDistance)
+        if (distance < maxDistance)
+        {
+            currentNode += (int)(1 * Mathf.Sign(animationSpeed));
+            currentNode = Mathf.Clamp(currentNode, 0, positions.Count - 1);
+            /*if (currentNode != positions.Count - 1)
             {
-                if (currentNode != positions.Count - 1)
-                {
-                    currentNode++;
-                } 
-                //transform.LookAt(_pathNodes[_currentNode]);
-                direction = (positions[currentNode] - transform.position).normalized;
-            }
-            MoveCharacterWorld(direction.x, direction.z);
+                currentNode += (int) (1 * Mathf.Sign(animationSpeed));
+            }*/
+
+            //transform.LookAt(_pathNodes[_currentNode]);
+            //direction = (positions[currentNode] - transform.position).normalized * Mathf.Sign(animationSpeed);
         }
+
     }
 
 
