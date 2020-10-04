@@ -235,8 +235,6 @@ public class CharacterMovement : MonoBehaviour
 
     private void ReplayUpdate()
     {
-        Vector3 direction = (positions[currentNode] - transform.position).normalized;
-        MoveCharacterWorld(direction.x, direction.z);
         float distance = Vector3.Distance(transform.position, positions[currentNode]);
         if (distance < maxDistance)
         {
@@ -249,6 +247,18 @@ public class CharacterMovement : MonoBehaviour
 
             //transform.LookAt(positions[currentNode]);
             //direction = (positions[currentNode] - transform.position).normalized * Mathf.Sign(animationSpeed);
+            distance = Vector3.Distance(transform.position, positions[currentNode]);
+            if (distance >= maxDistance)
+            {
+                Vector3 direction = (positions[currentNode] - transform.position).normalized;
+                MoveCharacterWorld(direction.x, direction.z);
+            }
+
+        } 
+        else
+        {
+            Vector3 direction = (positions[currentNode] - transform.position).normalized;
+            MoveCharacterWorld(direction.x, direction.z);
         }
 
     }

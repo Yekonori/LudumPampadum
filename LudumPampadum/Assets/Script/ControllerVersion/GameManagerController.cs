@@ -110,7 +110,7 @@ public class GameManagerController : MonoBehaviour
             else
             {
                 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-                if (input == Vector2.zero && characterMovements[characterMovements.Count - 1].MoveAuto == false)
+                if (input == Vector2.zero && characterMovements[characterMovements.Count - 1].MoveAuto == false && !Input.GetButton("Fire1"))
                 {
                     StopTimer();
                 }
@@ -124,6 +124,14 @@ public class GameManagerController : MonoBehaviour
                     RewindTime();
                 if (Input.GetButtonDown("Fire2"))
                     ReloadScene();
+
+                if (Input.GetButtonDown("Fire1"))
+                {
+                    StartTimer();
+                }
+                else if (Input.GetButtonUp("Fire1"))
+                    StopTimer();
+
             }
         }
     }
