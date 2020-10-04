@@ -6,22 +6,29 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    #region Script Parameters
+
     [Header("Parameter")]
 
     [Header("Timer")]
-    [SerializeField]
-    TextMeshProUGUI textTimer;
-    [SerializeField]
-    Image imageTimer;
+
+    [SerializeField] private TextMeshProUGUI textTimer;
+    [SerializeField] private Image imageTimer;
 
     [Header("Entity")]
-    [SerializeField]
-    TextMeshProUGUI textEntityNumber;
+    [SerializeField] private TextMeshProUGUI textEntityNumber;
+
+    [Header("Buttons")]
+    public Button reloadButton;
+    public Button startButton;
+
+    #endregion
 
     public void DrawTimer(float time, float maxTime)
     {
         string timerToDraw = "";
-        float t = Mathf.RoundToInt(time * 10);
+        //float t = Mathf.RoundToInt(time * 10);
+        float t = Mathf.RoundToInt(time);
         if (t < 10f) 
             timerToDraw += "0" + t;
         else
@@ -30,7 +37,6 @@ public class UIManager : MonoBehaviour
         textTimer.text = timerToDraw;
         imageTimer.fillAmount = time / maxTime;
     }
-
 
     public void DrawEntity(int entityNumber)
     {

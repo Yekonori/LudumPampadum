@@ -584,7 +584,7 @@ GameObject:
   - component: {fileID: 1331313110325866469}
   - component: {fileID: 1331313110325866468}
   m_Layer: 2
-  m_Name: GameObject
+  m_Name: ButtonZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

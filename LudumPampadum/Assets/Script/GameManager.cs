@@ -16,17 +16,11 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GhostMovement ghostPrefab;
     [SerializeField] private Transform world;
-    [SerializeField] private Button startButton;
 
     [Header("Timer")]
 
     [SerializeField] private float turnTimer;
     [SerializeField] private UIManager uiManager;
-
-    [Header("Debug Mode")]
-
-    [SerializeField] private bool onDebugMode;
-    [SerializeField] private Button reloadButton;
 
     #endregion
 
@@ -53,20 +47,17 @@ public class GameManager : MonoBehaviour
         {
             _instance = this;
         }
+
+        ghosts = new List<GhostMovement>();
     }
 
     private void Start()
     {
         InitTimer();
 
-        ghosts = new List<GhostMovement>();
+        SetUIButtons();
 
-        startButton.onClick.AddListener(LaunchMovement);
-
-        if (onDebugMode)
-        {
-            SetDebugMode();
-        }
+        uiManager.DrawEntity(ghosts.Count);
     }
 
     private void FixedUpdate()
@@ -102,6 +93,8 @@ public class GameManager : MonoBehaviour
         ghost.SetListNodes(playerPrefab.ListPoints);
 
         ghosts.Add(ghost);
+
+        uiManager.DrawEntity(ghosts.Count);
     }
 
     public void LaunchGhosts()
@@ -209,12 +202,12 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    #region Debug Mode
+    #region Buttons
 
-    private void SetDebugMode()
+    private void SetUIButtons()
     {
-        reloadButton.gameObject.SetActive(true);
-        reloadButton.onClick.AddListener(ReloadScene);
+        uiManager.startButton.onClick.AddListener(LaunchMovement);
+        uiManager.reloadButton.onClick.AddListener(ReloadScene);
     }
 
     private void ReloadScene()
