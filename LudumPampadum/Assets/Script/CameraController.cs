@@ -46,9 +46,17 @@ public class CameraController : MonoBehaviour
         if (focusTargetLock != null)
             targetPos = targetPos + ((focusTargetLock.position - focusTarget.position) / 2);
 
+        if (focusPriority == null)
+        {
+            targetPos = new Vector3(Mathf.Clamp(targetPos.x, clampX.x, clampX.y), targetPos.y, Mathf.Clamp(targetPos.z, clampZ.x, clampZ.y));
+            transform.position = Vector3.SmoothDamp(transform.position, targetPos + cameraOffset, ref velocity, smoothCamera);
+        }
+        else
+        {
+            targetPos = new Vector3(Mathf.Clamp(targetPos.x, clampX.x, clampX.y), targetPos.y - 5f, Mathf.Clamp(targetPos.z, clampZ.x, clampZ.y) + 10);
+            transform.position = Vector3.SmoothDamp(transform.position, targetPos + cameraOffset, ref velocity, 0.5f);
+        }
 
-        targetPos = new Vector3(Mathf.Clamp(targetPos.x, clampX.x, clampX.y), targetPos.y, Mathf.Clamp(targetPos.z, clampZ.x, clampZ.y));
-        transform.position = Vector3.SmoothDamp(transform.position, targetPos + cameraOffset, ref velocity, smoothCamera);
     }
 
     public void SetLocked(Transform lockTransform)

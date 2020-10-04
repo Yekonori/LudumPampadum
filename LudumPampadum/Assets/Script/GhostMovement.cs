@@ -16,7 +16,7 @@ public class GhostMovement : MonoBehaviour
 
     #region Fields
 
-    int _currentNode = 1;
+    int _currentNode = 0;
     private bool _canWalk;
 
     #endregion
@@ -38,7 +38,8 @@ public class GhostMovement : MonoBehaviour
 
     public void SetListNodes(List<Vector3> listP)
     {
-        _currentNode = 1;
+        if (listP.Count > 2)
+            _currentNode = 1;
 
         if (_listPoints == null)
         {

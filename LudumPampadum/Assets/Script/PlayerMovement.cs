@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _maxDistance = 1.0f;
     [SerializeField] Vector3 direction;
 
-    private List<Vector3> _listPoints;
+    [SerializeField] private List<Vector3> _listPoints;
     public List<Vector3> ListPoints
     {
         get { return _listPoints; }
@@ -77,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
             direction = (_listPoints[_currentNode] - transform.position).normalized;
 
             OrganiseMovements();
+            GameManager.Get.StartTimer();
         }
     }
 
@@ -123,7 +124,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void OrganiseMovements()
     {
-        if (_listPoints.Count < 2)
+        if (!GameManager.Get.HasGhosts()) return;
+
+        if (_listPoints.Count <= 2)
         {
             GameManager.Get.LaunchGhosts();
         }

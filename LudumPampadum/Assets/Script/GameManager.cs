@@ -10,18 +10,17 @@ public class GameManager : MonoBehaviour
 {
     #region Script Parameters
 
-    [Header("Main Canvas")]
+    [Header("Players & Ghost")]
 
     [SerializeField] private PlayerMovement playerPrefab;
 
     [SerializeField] private GhostMovement ghostPrefab;
     [SerializeField] private Transform world;
-    [SerializeField] private Button startButton;
 
-    [Header("Debug Mode")]
+    [Header("Timer")]
 
-    [SerializeField] private bool onDebugMode;
-    [SerializeField] private Button reloadButton;
+    [SerializeField] private float turnTimer;
+    [SerializeField] private UIManager uiManager;
 
     #endregion
 
@@ -33,25 +32,50 @@ public class GameManager : MonoBehaviour
         get { return _instance; }
     }
 
-    [SerializeField] private List<PlayerMovement> players;
-    [SerializeField] private List<GhostMovement> ghosts;
+    private List<GhostMovement> ghosts;
+
+    private float _currentTurnTimer;
+    private bool _canTimerRun;
+
+    private int numberOfScene;
+    private int activeSceneIndex;
 
     #endregion
 
     #region Unity Methods
 
-    private void Start()
+    private void Awake()
     {
         if (_instance != this)
         {
             _instance = this;
         }
 
-        startButton.onClick.AddListener(LaunchMovement);
+        ghosts = new List<GhostMovement>();
+        numberOfScene = SceneManager.sceneCountInBuildSettings;
+        activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        //Debug.Log(numberOfScene);
+        //Debug.Log(activeSceneIndex);
+    }
 
-        if (onDebugMode)
+    private void Start()
+    {
+        InitTimer();
+
+        SetUIButtons();
+
+        uiManager.DrawEntity(ghosts.Count);
+    }
+
+    private void FixedUpdate()
+    {
+        if (_canTimerRun)
         {
-            SetDebugMode();
+            _currentTurnTimer -= Time.fixedDeltaTime;
+
+            UpdateTimer();
+
+            CheckEndTimer();
         }
     }
 
@@ -61,11 +85,8 @@ public class GameManager : MonoBehaviour
 
     private void LaunchPlayer()
     {
-        GhostMovement ghost = Instantiate(ghostPrefab, world);
-        ghost.SetListNodes(playerPrefab.ListPoints);
+        CreateGhost();
 
-        ghosts.Add(ghost);
-        
         playerPrefab.Launch();
     }
 
@@ -73,8 +94,20 @@ public class GameManager : MonoBehaviour
 
     #region Ghosts
 
+    private void CreateGhost()
+    {
+        GhostMovement ghost = Instantiate(ghostPrefab, playerPrefab.ListPoints[0], Quaternion.identity, world);
+        ghost.SetListNodes(playerPrefab.ListPoints);
+
+        ghosts.Add(ghost);
+
+        uiManager.DrawEntity(ghosts.Count);
+    }
+
     public void LaunchGhosts()
     {
+        StartTimer();
+
         foreach (GhostMovement ghost in ghosts)
         {
             ghost.Launch();
@@ -83,6 +116,8 @@ public class GameManager : MonoBehaviour
 
     public void StopGhosts()
     {
+        StopTimer();
+
         foreach (GhostMovement ghost in ghosts)
         {
             ghost.Stop();
@@ -91,6 +126,8 @@ public class GameManager : MonoBehaviour
 
     public void ResumeGhosts()
     {
+        StartTimer();
+
         foreach (GhostMovement ghost in ghosts)
         {
             ghost.Resume();
@@ -105,6 +142,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public bool HasGhosts()
+    {
+        return ghosts.Count >= 1 ? true : false;
+    }
+
     #endregion
 
     #region Movement
@@ -112,16 +154,67 @@ public class GameManager : MonoBehaviour
     private void LaunchMovement()
     {
         LaunchPlayer();
+        InitTimer();
+    }
+
+    private void StopAllElements()
+    {
+        StopGhosts();
+
+        LaunchPlayer();
+
+        InitTimer();
     }
 
     #endregion
 
-    #region Debug Mode
+    #region Timer
 
-    private void SetDebugMode()
+    private void InitTimer()
     {
-        reloadButton.gameObject.SetActive(true);
-        reloadButton.onClick.AddListener(ReloadScene);
+        _currentTurnTimer = turnTimer;
+        UpdateTimer();
+    }
+
+    public void StartTimer()
+    {
+        _canTimerRun = true;
+    }
+
+    public void StopTimer()
+    {
+        _canTimerRun = false;
+    }
+
+    private void UpdateTimer()
+    {
+        uiManager.DrawTimer(_currentTurnTimer, turnTimer);
+       // timerText.text = string.Format("Timer : {0}", Mathf.RoundToInt(_currentTurnTimer).ToString());
+    }
+
+    private void CheckEndTimer()
+    {
+        if (_currentTurnTimer <= 0)
+        {
+            _currentTurnTimer = 0;
+
+            EndTimer();
+        }
+    }
+
+    private void EndTimer()
+    {
+        StopAllElements();
+    }
+
+    #endregion
+
+    #region Buttons
+
+    private void SetUIButtons()
+    {
+        uiManager.startButton.onClick.AddListener(LaunchMovement);
+        uiManager.reloadButton.onClick.AddListener(ReloadScene);
     }
 
     private void ReloadScene()
@@ -130,4 +223,18 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+
+    // Test changement de niveau
+    public void WinLevel(Transform priority)
+    {
+        Camera.main.GetComponent<CameraController>().SetFocusPriority(priority);
+        StartCoroutine(NextLevel());
+    }
+
+    IEnumerator NextLevel()
+    {
+        yield return new WaitForSeconds(3);
+        if (activeSceneIndex == numberOfScene - 1) SceneManager.LoadScene(0);
+        else SceneManager.LoadScene(activeSceneIndex + 1);
+    }
 }

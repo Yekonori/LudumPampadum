@@ -10,7 +10,10 @@ public class TriggerEvent : MonoBehaviour
 
     [SerializeField] private UnityEvent OnEnter;
     [SerializeField] private UnityEvent OnExit;
+
     [SerializeField] private bool onlyOnce;
+
+    int triggerCount = 0;
 
     #endregion
 
@@ -20,10 +23,11 @@ public class TriggerEvent : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            OnEnter.Invoke();
-            if(onlyOnce == true)
+            triggerCount += 1;
+            if (triggerCount == 1)
             {
-                Destroy(this.gameObject);
+                OnEnter.Invoke();
+                if (onlyOnce == true) Destroy(this.gameObject);
             }
         }
     }
@@ -32,11 +36,8 @@ public class TriggerEvent : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            OnExit.Invoke();
-            if (onlyOnce == true)
-            {
-                Destroy(this.gameObject);
-            }
+            triggerCount -= 1;
+            if(triggerCount == 0) OnExit.Invoke();
         }
     }
 
