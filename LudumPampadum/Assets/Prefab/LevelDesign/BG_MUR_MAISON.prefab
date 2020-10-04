@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 5023448314112084718}
   - component: {fileID: 8740395015483511823}
   - component: {fileID: 323228294452570339}
-  - component: {fileID: 5841422233390937157}
+  - component: {fileID: 8183086294006511898}
   m_Layer: 0
   m_Name: Mur_Maison
   m_TagString: Untagged
@@ -111,7 +111,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &5841422233390937157
+--- !u!65 &8183086294006511898
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,5 +122,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 175.84012, y: 375.2759, z: 343.219}
-  m_Center: {x: 85.92006, y: 188.28365, z: -171.6094}
+  m_Size: {x: 175.84012, y: 375.2759, z: 388.90512}
+  m_Center: {x: 85.92006, y: 188.28365, z: -194.45247}
