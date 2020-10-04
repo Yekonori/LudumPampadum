@@ -134,9 +134,28 @@ MonoBehaviour:
   recordInterval: 120
   maxDistance: 0.5
   camilleModel: {fileID: 8960049129405423972}
-  alixModel: {fileID: 7256006269504573438}
+  alixModel: {fileID: 4784527993026510736}
   isAlixModel: 0
   positions: []
+--- !u!95 &6147570432692247784
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4784527993026510736}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b2d37548ab01fc6488a39699fdb6c104, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!95 &2063006829587851875
 Animator:
   serializedVersion: 3
@@ -240,10 +259,16 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: c58a35c6a2eef824487e78169a552056,
         type: 3}
       propertyPath: m_Name
-      value: Alix_idle_walk
+      value: Alix
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c58a35c6a2eef824487e78169a552056, type: 3}
+--- !u!1 &4784527993026510736 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c58a35c6a2eef824487e78169a552056,
+    type: 3}
+  m_PrefabInstance: {fileID: 5667611965196649153}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5273115314172831018 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c58a35c6a2eef824487e78169a552056,
@@ -402,6 +427,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Camille
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: afeff0668a1484e4f8a3e9c9a6e50e29,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2860682868103239703, guid: afeff0668a1484e4f8a3e9c9a6e50e29,
         type: 3}

@@ -99,6 +99,15 @@ public class CharacterMovement : MonoBehaviour
         move.Normalize();
         move *= (speed * Mathf.Abs(animationSpeed));
         characterController.Move(move * Time.deltaTime);
+
+        if (isAlixModel)
+        {
+            alixModel.GetComponent<Animator>().SetBool("isWalking", true);
+        }
+        else
+        {
+            camilleModel.GetComponent<Animator>().SetBool("isWalking", true);
+        }
     }
 
     public void SetPosition(Vector3 pos)
@@ -157,6 +166,18 @@ public class CharacterMovement : MonoBehaviour
     public void SetAnimationSpeed(float value)
     {
         animationSpeed = value;
+
+        if (animationSpeed == 0)
+        {
+            if (isAlixModel)
+            {
+                alixModel.GetComponent<Animator>().SetBool("isWalking", false);
+            }
+            else
+            {
+                camilleModel.GetComponent<Animator>().SetBool("isWalking", false);
+            }
+        }
     }
 
     public void RewindReplay()
