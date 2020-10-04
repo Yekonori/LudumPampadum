@@ -63,8 +63,8 @@ public class GameManagerController : MonoBehaviour
         InitTimer();
 
         //characterMovements = new List<GhostMovement>();
-        characterMovements.Add(prefab);
-
+        characterMovements.Add(Instantiate(prefab, prefab.transform.position, Quaternion.identity, world));
+        prefab.gameObject.SetActive(false);
         startButton.onClick.AddListener(RewindTime);
 
         if (onDebugMode)
@@ -108,7 +108,6 @@ public class GameManagerController : MonoBehaviour
                 StartTimer();
                 characterMovements[characterMovements.Count - 1].MoveCharacterWorld(input.x, input.y);
             }
-
             if (Input.GetButtonDown("Fire3"))
                 RewindTime();
 
@@ -133,7 +132,7 @@ public class GameManagerController : MonoBehaviour
     private void CreatePlayer()
     {
         CharacterMovement newPlayer = Instantiate(prefab, characterMovements[0].Positions[0], Quaternion.identity, world);
-        //newPlayer.gameObject.SetActive(true);
+        newPlayer.gameObject.SetActive(true);
         characterMovements.Add(newPlayer);
     }
 
@@ -270,20 +269,28 @@ public class GameManagerController : MonoBehaviour
 
     public void RewindTime()
     {
-        canPlay = false;
-        characterMovements[characterMovements.Count - 1].RewindReplay();
-        StartCoroutine(RewindTimeCoroutine());
+        if (canPlay == true)
+        {
+            canPlay = false;
+            characterMovements[characterMovements.Count - 1].RewindReplay();
+            characterMovements[characterMovements.Count - 1].gameObject.layer = 9;
+            StartCoroutine(RewindTimeCoroutine());
+        }
     }
 
     private IEnumerator RewindTimeCoroutine()
     {
-        float animationSpeed = -2f;
+        StopTimer();
+        float animationSpeed = 0f;
         SetCharactersMovements(animationSpeed);
         while (_currentTurnTimer < turnTimer)
         {
-            /*if (animationSpeed > -3)
-                animationSpeed -= 0.05f;*/
-            _currentTurnTimer += Time.deltaTime * -animationSpeed;
+            if (animationSpeed > -2)
+            {
+                animationSpeed -= 0.02f;
+                SetCharactersMovements(animationSpeed);
+            }
+            _currentTurnTimer += Time.deltaTime * Mathf.Abs(animationSpeed);
             UpdateTimer();
             yield return null;
         }
