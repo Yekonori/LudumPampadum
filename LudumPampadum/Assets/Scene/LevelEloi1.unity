@@ -317,6 +317,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1197779799, guid: e8ffe192781b544a2bdd8352f815acce, type: 3}
+      propertyPath: cameraOffset.x
+      value: 19.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1197779799, guid: e8ffe192781b544a2bdd8352f815acce, type: 3}
+      propertyPath: cameraOffset.y
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1197779799, guid: e8ffe192781b544a2bdd8352f815acce, type: 3}
+      propertyPath: cameraOffset.z
+      value: -20
+      objectReference: {fileID: 0}
     - target: {fileID: 2274449863004607369, guid: e8ffe192781b544a2bdd8352f815acce,
         type: 3}
       propertyPath: m_Name
@@ -325,17 +337,17 @@ PrefabInstance:
     - target: {fileID: 2274449863004607374, guid: e8ffe192781b544a2bdd8352f815acce,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 21
+      value: 19.5
       objectReference: {fileID: 0}
     - target: {fileID: 2274449863004607374, guid: e8ffe192781b544a2bdd8352f815acce,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 22.25
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 2274449863004607374, guid: e8ffe192781b544a2bdd8352f815acce,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -27.25
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 2274449863004607374, guid: e8ffe192781b544a2bdd8352f815acce,
         type: 3}

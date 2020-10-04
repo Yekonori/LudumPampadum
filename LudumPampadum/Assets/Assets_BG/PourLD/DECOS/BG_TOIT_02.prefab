@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 8612964560105040602}
   - component: {fileID: 6105232832742153568}
   - component: {fileID: 1310140595385732183}
+  - component: {fileID: 1940925730295060692}
   m_Layer: 0
   m_Name: Toit
   m_TagString: Untagged
@@ -110,3 +111,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &1940925730295060692
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5604065988941474101}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 345.2265, y: 172.61322, z: 172.61328}
+  m_Center: {x: 172.61325, y: 86.30667, z: 85.30664}

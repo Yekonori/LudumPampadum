@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6329470096881566971}
   - component: {fileID: 8764769832741920995}
   - component: {fileID: 7858546575425742366}
+  - component: {fileID: 8849319213199972674}
   m_Layer: 0
   m_Name: Building_rabb
   m_TagString: Untagged
@@ -79,6 +80,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &8849319213199972674
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2830453173357535585}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 517.0777, y: 89.505005, z: 213.71143}
+  m_Center: {x: -258.53885, y: 44.752502, z: 105.85571}
 --- !u!1 &4523070643442353407
 GameObject:
   m_ObjectHideFlags: 0

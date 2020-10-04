@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 7179643449611677610}
   - component: {fileID: 3023222647368712486}
   - component: {fileID: 6931997810318893800}
+  - component: {fileID: 1929438240224911470}
   m_Layer: 0
   m_Name: polySurface44
   m_TagString: Untagged
@@ -110,3 +111,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &1929438240224911470
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5300788037297711205}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 80.22458, y: 266.63892, z: 215.76198}
+  m_Center: {x: -24.350937, y: 133.31943, z: 107.88099}
