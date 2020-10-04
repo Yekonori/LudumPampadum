@@ -41,7 +41,7 @@ public class CharacterMovement : MonoBehaviour
         set { positions = value; }
     }
 
-    private bool moveAuto = true;
+    private bool moveAuto = false;
     public bool MoveAuto
     {
         get { return moveAuto; }
@@ -162,6 +162,7 @@ public class CharacterMovement : MonoBehaviour
     public void RewindReplay()
     {
         currentNode = positions.Count - 1;
+        moveAuto = false;
         canRecord = false;
         inReplay = true;
     }
@@ -169,6 +170,7 @@ public class CharacterMovement : MonoBehaviour
     public void PlayReplay()
     {
         currentNode = 0;
+        moveAuto = false;
         canRecord = false;
         inReplay = true;
     }
