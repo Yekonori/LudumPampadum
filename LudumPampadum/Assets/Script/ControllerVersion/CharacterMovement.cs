@@ -131,16 +131,8 @@ public class CharacterMovement : MonoBehaviour
         move *= (speed * Mathf.Abs(animationSpeed));
         characterController.Move(move * Time.deltaTime);
 
-        if(inReplay)
-        {
-            transform.LookAt(this.transform.position - move);
-        }
-        else
-        {
-            transform.LookAt(this.transform.position + move);
-        }
+        transform.LookAt(this.transform.position + move * Mathf.Sign(animationSpeed));
         
-
         if (isAlixModel)
         {
             alixModel.GetComponent<Animator>().SetBool("isWalking", true);

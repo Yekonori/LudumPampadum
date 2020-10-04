@@ -341,9 +341,8 @@ public class GameManagerController : MonoBehaviour
         else
         {
             characterMovements[characterMovements.Count - 1].InReplay = false;
+            characterMovements[characterMovements.Count - 1].CanRecord = true;
             characterMovements[characterMovements.Count - 1].ClearPosition();
-
-            Debug.LogError("ClearPosition");
         }
 
         canPlay = true;
