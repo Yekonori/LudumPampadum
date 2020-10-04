@@ -317,7 +317,6 @@ public class GameManagerController : MonoBehaviour
         {
             canPlay = false;
             characterMovements[characterMovements.Count - 1].RewindReplay();
-            characterMovements[characterMovements.Count - 1].gameObject.layer = 9;
             StartCoroutine(RewindTimeCoroutine());
         }
     }
@@ -327,7 +326,11 @@ public class GameManagerController : MonoBehaviour
         StopTimer();
         float animationSpeed = 0f;
         rewindFeedback.SetBool("Rewind", true);
-        SetCharactersMovements(animationSpeed);
+        for (int i = 0; i < characterMovements.Count; i++)
+        {
+            characterMovements[i].SetAnimationSpeed(animationSpeed);
+            characterMovements[characterMovements.Count - 1].gameObject.layer = 9;
+        }
         while (_currentTurnTimer < turnTimer)
         {
             if (animationSpeed > -2)
@@ -340,9 +343,13 @@ public class GameManagerController : MonoBehaviour
             yield return null;
         }
         rewindFeedback.SetBool("Rewind", false);
-        SetCharactersMovements(1);
+        for (int i = 0; i < characterMovements.Count; i++)
+        {
+            characterMovements[i].SetAnimationSpeed(1);
+            characterMovements[characterMovements.Count - 1].gameObject.layer = 8;
+        }
 
-        if(characterMovements.Count - 1 < maxGhost)
+        if (characterMovements.Count - 1 < maxGhost)
         {
             characterMovements[characterMovements.Count - 1].PlayReplay();
             CreatePlayer();
