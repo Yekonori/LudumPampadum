@@ -37,6 +37,9 @@ public class GameManager : MonoBehaviour
     private float _currentTurnTimer;
     private bool _canTimerRun;
 
+    private int numberOfScene;
+    private int activeSceneIndex;
+
     #endregion
 
     #region Unity Methods
@@ -49,6 +52,10 @@ public class GameManager : MonoBehaviour
         }
 
         ghosts = new List<GhostMovement>();
+        numberOfScene = SceneManager.sceneCountInBuildSettings;
+        activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        //Debug.Log(numberOfScene);
+        //Debug.Log(activeSceneIndex);
     }
 
     private void Start()
@@ -216,4 +223,18 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+
+    // Test changement de niveau
+    public void WinLevel(Transform priority)
+    {
+        Camera.main.GetComponent<CameraController>().SetFocusPriority(priority);
+        StartCoroutine(NextLevel());
+    }
+
+    IEnumerator NextLevel()
+    {
+        yield return new WaitForSeconds(3);
+        if (activeSceneIndex == numberOfScene - 1) SceneManager.LoadScene(0);
+        else SceneManager.LoadScene(activeSceneIndex + 1);
+    }
 }
