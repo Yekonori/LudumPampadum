@@ -50,6 +50,7 @@ MonoBehaviour:
   world: {fileID: 0}
   maxGhost: 10
   turnTimer: 15
+  fastForwardMultiplier: 1
   uiManager: {fileID: 1732259967806032659}
   rewindFeedback: {fileID: 1732259968328421460}
 --- !u!1 &1732259968079262095
@@ -176,6 +177,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1732259967787181521}
     m_Modifications:
+    - target: {fileID: 1506970104971558753, guid: c372ed87b9ac1f34aaacbb1c9947882a,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1506970105551972133, guid: c372ed87b9ac1f34aaacbb1c9947882a,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1506970106812201737, guid: c372ed87b9ac1f34aaacbb1c9947882a,
         type: 3}
       propertyPath: m_Name

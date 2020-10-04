@@ -326,11 +326,13 @@ public class GameManagerController : MonoBehaviour
         StopTimer();
         float animationSpeed = 0f;
         rewindFeedback.SetBool("Rewind", true);
+
         for (int i = 0; i < characterMovements.Count; i++)
         {
             characterMovements[i].SetAnimationSpeed(animationSpeed);
-            characterMovements[characterMovements.Count - 1].gameObject.layer = 9;
+            characterMovements[i].gameObject.layer = 9;
         }
+
         while (_currentTurnTimer < turnTimer)
         {
             if (animationSpeed > -2)
@@ -342,11 +344,13 @@ public class GameManagerController : MonoBehaviour
             UpdateTimer();
             yield return null;
         }
+
         rewindFeedback.SetBool("Rewind", false);
         for (int i = 0; i < characterMovements.Count; i++)
         {
             characterMovements[i].SetAnimationSpeed(1);
-            characterMovements[characterMovements.Count - 1].gameObject.layer = 8;
+            characterMovements[i].gameObject.layer = 8;
+            characterMovements[i].SetPosition(prefab.transform.position);
         }
 
         if (characterMovements.Count - 1 < maxGhost)
