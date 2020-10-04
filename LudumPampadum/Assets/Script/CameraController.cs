@@ -28,11 +28,11 @@ public class CameraController : MonoBehaviour
 
     Vector3 velocity = Vector3.zero;
 
-    private void Start()
-    {
-        if (focusTarget == null)
-            focusTarget = FindObjectOfType<PlayerMovement>().transform;
-    }
+    //private void Start()
+    //{
+    //    if (focusTarget == null)
+    //        focusTarget = FindObjectOfType<CharacterMovement>().transform;
+    //}
 
     private void Update()
     {
@@ -69,5 +69,8 @@ public class CameraController : MonoBehaviour
         focusPriority = focusTransform;
     }
 
-
+    public void SetFocus(Transform focusTransform)
+    {
+        focusTarget = focusTransform;
+    }
 }

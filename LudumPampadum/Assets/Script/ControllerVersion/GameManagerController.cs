@@ -46,6 +46,11 @@ public class GameManagerController : MonoBehaviour
 
     int layerMask = 1 << 0;
 
+    private int numberOfScene;
+    private int activeSceneIndex;
+
+    CameraController camera;
+
     #endregion
 
     #region Unity Methods
@@ -56,6 +61,9 @@ public class GameManagerController : MonoBehaviour
         {
             _instance = this;
         }
+        camera = Camera.main.GetComponent<CameraController>();
+        numberOfScene = SceneManager.sceneCountInBuildSettings;
+        activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
     private void Start()
@@ -68,6 +76,7 @@ public class GameManagerController : MonoBehaviour
         prefab.gameObject.SetActive(false);
 
         uiManager.DrawEntity(characterMovements.Count - 1);
+        camera.SetFocus(characterMovements[0].transform);
     }
 
     private void Update()
@@ -156,6 +165,8 @@ public class GameManagerController : MonoBehaviour
         characterMovements.Add(newPlayer);
 
         uiManager.DrawEntity(characterMovements.Count - 1);
+
+        camera.SetFocus(newPlayer.transform);
     }
 
     /*public void LaunchGhosts()
@@ -330,4 +341,18 @@ public class GameManagerController : MonoBehaviour
     }
 
     #endregion
+
+    // Test changement de niveau
+    public void WinLevel(Transform priority)
+    {
+        camera.SetFocusPriority(priority);
+        StartCoroutine(NextLevel());
+    }
+
+    IEnumerator NextLevel()
+    {
+        yield return new WaitForSeconds(3);
+        if (activeSceneIndex == numberOfScene - 1) SceneManager.LoadScene(0);
+        else SceneManager.LoadScene(activeSceneIndex + 1);
+    }
 }
