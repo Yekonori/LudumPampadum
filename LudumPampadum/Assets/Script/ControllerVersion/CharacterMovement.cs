@@ -18,37 +18,62 @@ public class CharacterMovement : MonoBehaviour
     float recordInterval = 5;
     [SerializeField] float maxDistance = 1.0f;
 
-    bool isPlayable = true;
+    /*private bool isPlayable = true;
+
+    public bool IsPlayable
+    {
+        get { return isPlayable; }
+        set { isPlayable = value; }
+    }*/
 
     int currentNode = 0;
-    private List<Vector3> positions;
+
+    [SerializeField]
+    private List<Vector3> positions = new List<Vector3>();
     public List<Vector3> Positions
     {
         get { return positions; }
         set { positions = value; }
     }
 
-    private bool canRecord = false;
+    private bool canRecord = true;
     public bool CanRecord
     {
         get { return canRecord; }
         set { canRecord = value; }
     }
 
+    private bool inReplay = false;
+    public bool InReplay
+    {
+        get { return inReplay; }
+        set { inReplay = value; }
+    }
+
     float animationSpeed = 1f;
     float recordTime = 0f;
 
-
+    private void Start()
+    {
+        recordInterval /= 60f;
+    }
     private void Update()
     {
-        if(isPlayable == true)
+        /*if(isPlayable == true)
         {
             MoveCharacterWorld(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        }*/
+        if (canRecord == true)
+        {
+            RecordPosition();
         }
-        RecordPosition();
+        else if(inReplay == true)
+        {
+            ReplayUpdate();
+        }
     }
 
-    private void MoveCharacterWorld(float directionX, float directionZ)
+    public void MoveCharacterWorld(float directionX, float directionZ)
     {
         Vector3 move = new Vector3(directionX, 0, directionZ);
         move.Normalize();
@@ -70,7 +95,7 @@ public class CharacterMovement : MonoBehaviour
     {
         if(canRecord == true)
         {
-            recordTime -= Time.deltaTime;
+            recordTime -= Time.deltaTime * animationSpeed;
             if (recordTime <= 0)
             {
                 positions.Add(this.transform.position);
@@ -85,29 +110,38 @@ public class CharacterMovement : MonoBehaviour
         animationSpeed = value;
     }
 
-    public void PlayRecord()
+    public void RewindReplay()
     {
-        
+        currentNode = positions.Count - 1;
+        canRecord = false;
+        inReplay = true;
     }
 
-    private IEnumerator RecordCoroutine()
+    public void PlayReplay()
     {
-        Vector3 direction = (positions[currentNode] - transform.position).normalized;
-        while (true)
-        {
-            float distance = Vector3.Distance(transform.position, positions[currentNode]);
+        canRecord = false;
+        inReplay = true;
+    }
 
-            if (distance < maxDistance)
+    private void ReplayUpdate()
+    {
+        Vector3 direction = (positions[currentNode] - transform.position).normalized  * Mathf.Sign(animationSpeed);
+        MoveCharacterWorld(direction.x, direction.z);
+        float distance = Vector3.Distance(transform.position, positions[currentNode]);
+
+        if (distance < maxDistance)
+        {
+            currentNode += (int)(1 * Mathf.Sign(animationSpeed));
+            currentNode = Mathf.Clamp(currentNode, 0, positions.Count - 1);
+            /*if (currentNode != positions.Count - 1)
             {
-                if (currentNode != positions.Count - 1)
-                {
-                    currentNode++;
-                } 
-                //transform.LookAt(_pathNodes[_currentNode]);
-                direction = (positions[currentNode] - transform.position).normalized;
-            }
-            MoveCharacterWorld(direction.x, direction.z);
+                currentNode += (int) (1 * Mathf.Sign(animationSpeed));
+            }*/
+
+            //transform.LookAt(_pathNodes[_currentNode]);
+            //direction = (positions[currentNode] - transform.position).normalized * Mathf.Sign(animationSpeed);
         }
+
     }
 
 
