@@ -297,7 +297,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &76656520
 Transform:
   m_ObjectHideFlags: 0
@@ -451,8 +451,8 @@ GameObject:
   - component: {fileID: 186553552}
   - component: {fileID: 186553551}
   m_Layer: 0
-  m_Name: Cube
-  m_TagString: Untagged
+  m_Name: Player
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -473,7 +473,7 @@ MonoBehaviour:
   speed: 10
   joystick: 0.5
   recordInterval: 10
-  maxDistance: 1
+  maxDistance: 0.2
 --- !u!143 &186553552
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2878,18 +2878,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7201508176748867362}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fab7e794db13bd4abb0045dc1c98ed4, type: 3}
+  m_Script: {fileID: 11500000, guid: 95b8a9dcf8b45864a927b7f5620e3bf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 76656525}
-  ghostPrefab: {fileID: 1046889049996998919, guid: 2a3f60227d0a93f4c81207d77ab585fe,
-    type: 3}
+  prefab: {fileID: 186553551}
   world: {fileID: 162932103}
   startButton: {fileID: 520605035796143269}
-  turnTimer: 9
+  turnTimer: 1
   uiManager: {fileID: 520605036844889504}
-  onDebugMode: 1
-  reloadButton: {fileID: 1116364720}
+  onDebugMode: 0
+  reloadButton: {fileID: 0}
 --- !u!4 &7201508176748867364
 Transform:
   m_ObjectHideFlags: 0
