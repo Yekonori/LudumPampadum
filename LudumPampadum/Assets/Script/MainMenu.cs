@@ -33,7 +33,7 @@ public class MainMenu : MonoBehaviour
     public void StartGame(int sceneIndex)
     {
         Debug.Log("Starting level " + sceneIndex);
-        //SceneManager.LoadScene(sceneIndex);
+        SceneManager.LoadScene(sceneIndex);
     }
 
     public void QuitGame()
