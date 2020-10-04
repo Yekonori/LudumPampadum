@@ -19,12 +19,13 @@ public class GameManagerController : MonoBehaviour
     [Header("Timer")]
 
     [SerializeField] private float turnTimer;
-    [SerializeField] private float fastForwardMultiplier = 1f;
+    [SerializeField] private float fastForwardBonus = 1f;
     [SerializeField] private UIManager uiManager;
 
     [Header("Feedback")]
     [SerializeField] Animator rewindFeedback;
 
+    private float fastForward = 1f;
     private bool canPlay = true;
     List<CharacterMovement> characterMovements = new List<CharacterMovement>();
 
@@ -85,7 +86,7 @@ public class GameManagerController : MonoBehaviour
         UpdateController();
         if (_canTimerRun)
         {
-            _currentTurnTimer -= Time.deltaTime;
+            _currentTurnTimer -= (Time.deltaTime * fastForward);
             UpdateTimer();
             CheckEndTimer();
         }
@@ -128,7 +129,7 @@ public class GameManagerController : MonoBehaviour
 
                 if (Input.GetButtonDown("Fire1"))
                 {
-                    StartTimer();                  
+                    StartTimer(fastForwardBonus);                  
                 }
                 else if (Input.GetButtonUp("Fire1"))
                     StopTimer();
@@ -252,14 +253,16 @@ public class GameManagerController : MonoBehaviour
         UpdateTimer();
     }
 
-    public void StartTimer()
+    public void StartTimer(float time = 1f)
     {
+        fastForward = time;
         _canTimerRun = true;
-        SetCharactersMovements(1f);
+        SetCharactersMovements(fastForward);
     }
 
     public void StopTimer()
     {
+        fastForward = 1f;
         _canTimerRun = false;
         SetCharactersMovements(0f);
     }
@@ -335,7 +338,7 @@ public class GameManagerController : MonoBehaviour
 
         while (_currentTurnTimer < turnTimer)
         {
-            if (animationSpeed > -2)
+            if (animationSpeed > -3)
             {
                 animationSpeed -= 0.02f;
                 SetCharactersMovements(animationSpeed);
