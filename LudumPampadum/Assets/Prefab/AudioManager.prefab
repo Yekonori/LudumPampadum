@@ -43,7 +43,91 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26469ae859665824a87e7e4ea9094968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - name: Music
+    clip: {fileID: 8300000, guid: f658a198fe324a9498d9856723397513, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 1
+    isMusic: 1
+    source: {fileID: 0}
+  - name: SFX_Dead
+    clip: {fileID: 8300000, guid: df72540e0d4acb4409e912292d46a458, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    isMusic: 0
+    source: {fileID: 0}
+  - name: SFX_Door_Close
+    clip: {fileID: 8300000, guid: da03ccda2cbdfa9409887ae4e39edfac, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    isMusic: 0
+    source: {fileID: 0}
+  - name: SFX_Door_Open
+    clip: {fileID: 8300000, guid: 56a2390c7978ce24293d53a9591d77ce, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    isMusic: 0
+    source: {fileID: 0}
+  - name: SFX_Pressure
+    clip: {fileID: 8300000, guid: 901c060627f5afa4e9fc1d250e8d773b, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    isMusic: 0
+    source: {fileID: 0}
+  - name: SFX_Rewind_End
+    clip: {fileID: 8300000, guid: f18568fbac497fa42a94cfc0412bf754, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    isMusic: 0
+    source: {fileID: 0}
+  - name: SFX_Rewind_Pause
+    clip: {fileID: 8300000, guid: d10884c0f5d774f45912586e4b3a39e2, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    isMusic: 0
+    source: {fileID: 0}
+  - name: SFX_Rewind_Play
+    clip: {fileID: 8300000, guid: 867c4e94627ebdf47bb8bc3fe0501253, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    isMusic: 0
+    source: {fileID: 0}
+  - name: SFX_Rewind_Start
+    clip: {fileID: 8300000, guid: 22806db548265c347a1bdf40bcd9412c, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    isMusic: 0
+    source: {fileID: 0}
+  - name: SFX_Rewinding
+    clip: {fileID: 8300000, guid: 459a7d7e1b2a43e42a04858e8be37769, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 1
+    isMusic: 0
+    source: {fileID: 0}
+  - name: SFX_Select
+    clip: {fileID: 8300000, guid: 8130c37c4d0c7774a87eca4caa6d71ac, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    isMusic: 0
+    source: {fileID: 0}
+  - name: SFX_Spawn
+    clip: {fileID: 8300000, guid: f58a11d49f18b7943bcc0e3f96b0e94e, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    isMusic: 0
+    source: {fileID: 0}
   currentMusic: 
   Mixer: {fileID: 24100000, guid: 6b98e7c6c55664d40bf8ec6471de13e9, type: 2}
   MusicMixer: {fileID: -2937090394158113079, guid: 6b98e7c6c55664d40bf8ec6471de13e9,
@@ -52,5 +136,5 @@ MonoBehaviour:
     type: 2}
   musicVolume: 0
   soundVolume: 0
-  minPitch: 0
-  maxPitch: 0
+  minPitch: 0.7
+  maxPitch: 1.3

@@ -50,14 +50,14 @@ public class AudioManager : MonoBehaviour
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
         }
+
+        PlayMusic();
     }
 
-    public void IntiAudio(int sceneId)
+    void PlayMusic()
     {
-        PlayLevelMusic(sceneId);
+        Play("Music", false);
     }
-
-    void PlayLevelMusic(int id){}
 
     public void Play (string name, bool pitch)
     {
