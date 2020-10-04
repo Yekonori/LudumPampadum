@@ -62,9 +62,12 @@ public class GameManagerController : MonoBehaviour
     {
         InitTimer();
 
-        //characterMovements = new List<GhostMovement>();
+        SetUIButtons();
+
         characterMovements.Add(Instantiate(prefab, prefab.transform.position, Quaternion.identity, world));
         prefab.gameObject.SetActive(false);
+
+        uiManager.DrawEntity(characterMovements.Count - 1);
     }
 
     private void Update()
@@ -151,6 +154,8 @@ public class GameManagerController : MonoBehaviour
         CharacterMovement newPlayer = Instantiate(prefab, characterMovements[0].Positions[0], Quaternion.identity, world);
         newPlayer.gameObject.SetActive(true);
         characterMovements.Add(newPlayer);
+
+        uiManager.DrawEntity(characterMovements.Count - 1);
     }
 
     /*public void LaunchGhosts()
@@ -315,7 +320,12 @@ public class GameManagerController : MonoBehaviour
         rewindFeedback.SetBool("Rewind", false);
         SetCharactersMovements(1);
         characterMovements[characterMovements.Count - 1].PlayReplay();
-        CreatePlayer();
+
+        if(characterMovements.Count - 1 < maxGhost)
+        {
+            CreatePlayer();
+        }
+
         canPlay = true;
     }
 

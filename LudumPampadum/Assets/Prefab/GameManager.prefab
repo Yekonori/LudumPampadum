@@ -48,8 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 1732259967932574973}
   world: {fileID: 0}
-  maxGhost: 0
-  turnTimer: 1
+  maxGhost: 10
+  turnTimer: 15
   uiManager: {fileID: 1732259967806032659}
   rewindFeedback: {fileID: 1732259968328421460}
 --- !u!1 &1732259968079262095

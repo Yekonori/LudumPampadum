@@ -501,11 +501,21 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1732259967306518394, guid: d083dd93260f1ad45b10f954bb9f3938,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1732259967787181520, guid: d083dd93260f1ad45b10f954bb9f3938,
         type: 3}
       propertyPath: world
       value: 
       objectReference: {fileID: 1924922668}
+    - target: {fileID: 1732259967787181520, guid: d083dd93260f1ad45b10f954bb9f3938,
+        type: 3}
+      propertyPath: turnTimer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 1732259967787181521, guid: d083dd93260f1ad45b10f954bb9f3938,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -565,6 +575,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1732259968680757341, guid: d083dd93260f1ad45b10f954bb9f3938,
+        type: 3}
+      propertyPath: m_text
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1732259968680757341, guid: d083dd93260f1ad45b10f954bb9f3938,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1788049694158826542, guid: d083dd93260f1ad45b10f954bb9f3938,
         type: 3}
