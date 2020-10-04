@@ -171,7 +171,7 @@ public class GameManagerController : MonoBehaviour
         currentPlayer.isAlixModel = true;
         currentPlayer.UpdateModel();
 
-        CharacterMovement newPlayer = Instantiate(prefab, characterMovements[0].Positions[0], Quaternion.identity, world);
+        CharacterMovement newPlayer = Instantiate(prefab, characterMovements[0].Positions[0].Positions, Quaternion.identity, world);
         newPlayer.gameObject.SetActive(true);
         characterMovements.Add(newPlayer);
 
@@ -351,6 +351,7 @@ public class GameManagerController : MonoBehaviour
             characterMovements[i].SetAnimationSpeed(1);
             characterMovements[i].gameObject.layer = 8;
             characterMovements[i].SetPosition(prefab.transform.position);
+            characterMovements[i].PlayReplay();
         }
 
         if (characterMovements.Count - 1 < maxGhost)

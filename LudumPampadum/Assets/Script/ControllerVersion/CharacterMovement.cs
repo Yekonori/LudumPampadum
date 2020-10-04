@@ -2,6 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[System.Serializable]
+public struct CharacterPosition
+{
+    public Vector3 Positions;
+    public float Time;
+
+    public CharacterPosition(Vector3 pos, float t)
+    {
+        Positions = pos;
+        Time = t;
+    }
+}
+
+
+
 public class CharacterMovement : MonoBehaviour
 {
     [SerializeField]
@@ -34,8 +50,8 @@ public class CharacterMovement : MonoBehaviour
     int currentNode = 0;
 
     [SerializeField]
-    private List<Vector3> positions = new List<Vector3>();
-    public List<Vector3> Positions
+    private List<CharacterPosition> positions = new List<CharacterPosition>();
+    public List<CharacterPosition> Positions
     {
         get { return positions; }
         set { positions = value; }
@@ -65,12 +81,17 @@ public class CharacterMovement : MonoBehaviour
     }
 
     float animationSpeed = 1f;
-    float recordTime = 0f;
     Camera camera;
+
+    float recordTime = 0f;
+    float totalRecordTime = 0f;
+    float replayTime = 0f;
+
+
 
     private void Start()
     {
-        recordInterval /= 60f;
+        //recordInterval /= 60f;
         camera = Camera.main;
     }
     private void Update()
@@ -144,6 +165,19 @@ public class CharacterMovement : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Move Character without Time.deltatime
+    /// </summary>
+    /// <param name="directionX"></param>
+    /// <param name="directionZ"></param>
+    public void MoveCharacterManual(float speedX, float speedY, float speedZ)
+    {
+        Vector3 move = new Vector3(speedX, speedY, speedZ);
+        characterController.Move(move);
+    }
+
+
+
     public void SetPosition(Vector3 pos)
     {
         characterController.enabled = false;
@@ -191,9 +225,10 @@ public class CharacterMovement : MonoBehaviour
         if(canRecord == true)
         {
             recordTime -= Time.deltaTime * animationSpeed;
+            totalRecordTime += Time.deltaTime * animationSpeed;
             if (recordTime <= 0)
             {
-                positions.Add(this.transform.position);
+                positions.Add(new CharacterPosition(this.transform.position, totalRecordTime));
                 recordTime = recordInterval;
             }
         }
@@ -220,6 +255,7 @@ public class CharacterMovement : MonoBehaviour
     public void RewindReplay()
     {
         currentNode = positions.Count - 1;
+        replayTime = totalRecordTime;
         moveAuto = false;
         canRecord = false;
         inReplay = true;
@@ -228,30 +264,88 @@ public class CharacterMovement : MonoBehaviour
     public void PlayReplay()
     {
         currentNode = 0;
+        replayTime = 0;
         moveAuto = false;
         canRecord = false;
         inReplay = true;
     }
 
+    public void ResetReplay()
+    {
+        currentNode = 0;
+        replayTime = 0;
+        moveAuto = false;
+        canRecord = false;
+        inReplay = true;
+    }
+    /* private void ReplayUpdate()
+     {
+         Vector3 direction = (positions[currentNode] - transform.position).normalized;
+         MoveCharacterWorld(direction.x, direction.z);
+         float distance = Vector3.Distance(transform.position, positions[currentNode]);
+         if (distance < maxDistance)
+         {
+             currentNode += (int)(1 * Mathf.Sign(animationSpeed));
+             currentNode = Mathf.Clamp(currentNode, 0, positions.Count - 1);
+
+         }
+
+     }*/
+
     private void ReplayUpdate()
     {
-        Vector3 direction = (positions[currentNode] - transform.position).normalized;
-        MoveCharacterWorld(direction.x, direction.z);
-        float distance = Vector3.Distance(transform.position, positions[currentNode]);
-        if (distance < maxDistance)
+        replayTime += Time.deltaTime * animationSpeed;
+        Vector3 destination;
+        if (animationSpeed < 0)
+            destination = CalculateRewindDestination();
+        else
         {
-            currentNode += (int)(1 * Mathf.Sign(animationSpeed));
-            currentNode = Mathf.Clamp(currentNode, 0, positions.Count - 1);
-            /*if (currentNode != positions.Count - 1)
+            destination = CalculateReplayDestination();
+
+            // Mettre un raycast si on veut que ça se passe bien
+            /*RaycastHit hit;
+            int layerMask = 1 << 0;
+            //Debug.DrawRay(this.transform.position + new Vector3(0, 0.2f, 0), destination - this.transform.position, Color.yellow, destination.magnitude);
+            if (Physics.Raycast(this.transform.position + new Vector3(0, 0.2f, 0), destination - this.transform.position + new Vector3(0, 0.2f, 0), out hit, destination.magnitude, layerMask))
             {
-                currentNode += (int) (1 * Mathf.Sign(animationSpeed));
+                //Debug.Log(hit.collider.gameObject.name);
+                replayTime -= Time.deltaTime * animationSpeed;
+                return;
             }*/
+        }
+        MoveCharacterManual(destination.x - transform.position.x, 0, destination.z - transform.position.z);
+    }
 
-            //transform.LookAt(positions[currentNode]);
-            //direction = (positions[currentNode] - transform.position).normalized * Mathf.Sign(animationSpeed);
+    // C'est giga sale
+    private Vector3 CalculateReplayDestination()
+    {
+        if (currentNode == positions.Count - 1)
+            return positions[positions.Count - 1].Positions;
+        float t = (replayTime - positions[currentNode].Time) / (positions[currentNode+1].Time - positions[currentNode].Time);
+        while(t > 1) 
+        {
+            currentNode += 1;
+            if (currentNode == positions.Count - 1)
+                return positions[positions.Count - 1].Positions;
+            t = (replayTime - positions[currentNode].Time) / (positions[currentNode + 1].Time - positions[currentNode].Time);
+        }
+        return Vector3.Lerp(positions[currentNode].Positions, positions[currentNode+1].Positions, t);
+    }
 
-        } 
-
+    // C'est giga sale
+    private Vector3 CalculateRewindDestination()
+    {
+        if (currentNode == 0)
+            return positions[0].Positions;
+        float t = (positions[currentNode].Time - replayTime) / (positions[currentNode].Time - positions[currentNode - 1].Time);
+        while (t > 1)
+        {
+            currentNode -= 1;
+            if (currentNode == 0)
+                return positions[0].Positions;
+            t = (positions[currentNode].Time - replayTime) / (positions[currentNode].Time - positions[currentNode - 1].Time);
+        }
+        return Vector3.Lerp(positions[currentNode].Positions, positions[currentNode - 1].Positions, t);
     }
 
 

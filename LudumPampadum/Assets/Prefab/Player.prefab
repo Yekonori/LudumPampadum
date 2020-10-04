@@ -131,7 +131,7 @@ MonoBehaviour:
   characterController: {fileID: 716628859}
   speed: 10
   joystick: 0.5
-  recordInterval: 120
+  recordInterval: 0.08
   maxDistance: 0.5
   camilleModel: {fileID: 8960049129405423972}
   alixModel: {fileID: 4784527993026510736}
