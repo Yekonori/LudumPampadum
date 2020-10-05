@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -59,6 +60,12 @@ public class UIManager : MonoBehaviour
     public void ActivatePause(bool b)
     {
         pausePanel.SetActive(b);
+    }
+
+    public void ReturnToTitleScreen()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu");
     }
 
 
