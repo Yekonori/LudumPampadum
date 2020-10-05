@@ -324,6 +324,7 @@ public class GameManagerController : MonoBehaviour
             StartCoroutine(RewindTimeCoroutine());
             AudioManager.instance.Play("SFX_Rewind_Start", false);
             AudioManager.instance.Play("SFX_Rewinding", false);
+            AudioManager.instance.MusicPitchEffectOn();
         }
     }
 
@@ -375,6 +376,7 @@ public class GameManagerController : MonoBehaviour
         canPlay = true;
         AudioManager.instance.Stop("SFX_Rewinding");
         AudioManager.instance.Play("SFX_Rewind_End", false);
+        AudioManager.instance.MusicPitchEffectOff();
     }
 
     #endregion

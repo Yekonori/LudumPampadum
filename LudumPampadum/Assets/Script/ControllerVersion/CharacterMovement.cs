@@ -82,6 +82,8 @@ public class CharacterMovement : MonoBehaviour
 
     float animationSpeed = 1f;
     Camera camera;
+    Animator animatorAlix;
+    Animator animatorCamille;
 
     float recordTime = 0f;
     float totalRecordTime = 0f;
@@ -93,7 +95,10 @@ public class CharacterMovement : MonoBehaviour
     {
         //recordInterval /= 60f;
         camera = Camera.main;
+        animatorAlix = alixModel.GetComponent<Animator>();
+        animatorCamille = camilleModel.GetComponent<Animator>();
     }
+
     private void Update()
     {
         if(moveAuto == true)
@@ -135,14 +140,7 @@ public class CharacterMovement : MonoBehaviour
 
         transform.LookAt(this.transform.position + move);
 
-        if (isAlixModel)
-        {
-            alixModel.GetComponent<Animator>().SetBool("isWalking", true);
-        }
-        else
-        {
-            camilleModel.GetComponent<Animator>().SetBool("isWalking", true);
-        }
+        PlayWalkAnim();
     }
 
     public void MoveCharacterWorld(float directionX, float directionZ)
@@ -153,15 +151,8 @@ public class CharacterMovement : MonoBehaviour
         characterController.Move(move * Time.deltaTime);
 
         transform.LookAt(this.transform.position + move * Mathf.Sign(animationSpeed));
-        
-        if (isAlixModel)
-        {
-            alixModel.GetComponent<Animator>().SetBool("isWalking", true);
-        }
-        else
-        {
-            camilleModel.GetComponent<Animator>().SetBool("isWalking", true);
-        }
+
+        PlayWalkAnim();
     }
 
 
@@ -174,6 +165,23 @@ public class CharacterMovement : MonoBehaviour
     {
         Vector3 move = new Vector3(speedX, speedY, speedZ);
         characterController.Move(move);
+
+        transform.LookAt(this.transform.position + move * Mathf.Sign(animationSpeed));
+        PlayWalkAnim();
+    }
+
+    private void PlayWalkAnim()
+    {
+        if (animationSpeed == 0)
+            return;
+        if (isAlixModel)
+        {
+            animatorAlix.SetBool("isWalking", true);
+        }
+        else
+        {
+            animatorCamille.SetBool("isWalking", true);
+        }
     }
 
 
@@ -238,16 +246,18 @@ public class CharacterMovement : MonoBehaviour
     public void SetAnimationSpeed(float value)
     {
         animationSpeed = value;
+        animatorAlix.SetFloat("AnimSpeed",animationSpeed);
+        animatorCamille.SetFloat("AnimSpeed", animationSpeed);
 
         if (animationSpeed == 0)
         {
             if (isAlixModel)
             {
-                alixModel.GetComponent<Animator>().SetBool("isWalking", false);
+                animatorAlix.SetBool("isWalking", false);
             }
             else
             {
-                camilleModel.GetComponent<Animator>().SetBool("isWalking", false);
+                animatorCamille.SetBool("isWalking", false);
             }
         }
     }
