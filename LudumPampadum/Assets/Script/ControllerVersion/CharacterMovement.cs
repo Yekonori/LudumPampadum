@@ -180,10 +180,12 @@ public class CharacterMovement : MonoBehaviour
             return;
         if (isAlixModel)
         {
+            SoundRewind(true);
             animatorAlix.SetBool("isWalking", true);
         }
         else
         {
+            SoundRewind(true);
             animatorCamille.SetBool("isWalking", true);
         }
     }
@@ -257,10 +259,12 @@ public class CharacterMovement : MonoBehaviour
         {
             if (isAlixModel)
             {
+                SoundRewind(false);
                 animatorAlix.SetBool("isWalking", false);
             }
             else
             {
+                SoundRewind(false);
                 animatorCamille.SetBool("isWalking", false);
             }
         }

@@ -139,7 +139,6 @@ public class GameManagerController : MonoBehaviour
             if (Input.GetButtonDown("Cancel"))
             {
                 Pause();
-
             }
         }
     }
