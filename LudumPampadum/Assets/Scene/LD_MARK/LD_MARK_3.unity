@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028346, g: 0.22571373, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -671,6 +671,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< HEAD
+=======
+    - target: {fileID: 4415470562744970428, guid: 2859642c29ec43d4c84d0a83e4b4342c,
+        type: 3}
+      propertyPath: m_Name
+      value: Winzone
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465749595312898952, guid: 2859642c29ec43d4c84d0a83e4b4342c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5637094341343571383, guid: 2859642c29ec43d4c84d0a83e4b4342c,
+        type: 3}
+      propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: LevelEloi1
+      objectReference: {fileID: 0}
+>>>>>>> 048dc8820a4b6731b150253b4b44748666e709e1
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bfea60848941ee74cbf119c92b59cd59, type: 3}
 --- !u!1001 &81800196
