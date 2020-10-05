@@ -79,6 +79,7 @@ public class GameManagerController : MonoBehaviour
 
         uiManager.DrawEntity(maxGhost);
         camera.SetFocus(characterMovements[0].transform);
+        camera.transform.position = characterMovements[0].transform.position;
     }
 
     private void Update()
