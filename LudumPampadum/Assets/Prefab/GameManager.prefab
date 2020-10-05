@@ -227,7 +227,7 @@ RectTransform:
   - {fileID: 1435386034}
   - {fileID: 1428702115}
   m_Father: {fileID: 1732259967806032660}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -451,6 +451,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1506970106812201742, guid: c372ed87b9ac1f34aaacbb1c9947882a,
+        type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1506970106812201743, guid: c372ed87b9ac1f34aaacbb1c9947882a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -605,7 +610,7 @@ PrefabInstance:
     - target: {fileID: 1085095125918411827, guid: e295489e2434b5e46af65e50a6d8e583,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.74
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1085095125918411827, guid: e295489e2434b5e46af65e50a6d8e583,
         type: 3}
