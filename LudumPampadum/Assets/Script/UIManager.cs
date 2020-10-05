@@ -19,9 +19,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textEntityNumber;
 
     [Header("Buttons")]
+    public Button pauseButton;
     public Button reloadButton;
     public Button startButton;
 
+
+    [SerializeField] private GameObject pausePanel;
 
     [SerializeField] private Animator overlayFeedback;
 
@@ -51,6 +54,11 @@ public class UIManager : MonoBehaviour
     public void RewindOverlayFeedback(bool b)
     {
         overlayFeedback.SetBool("FeedbackOn", b);
+    }
+
+    public void ActivatePause(bool b)
+    {
+        pausePanel.SetActive(b);
     }
 
 
