@@ -333,7 +333,7 @@ public class GameManagerController : MonoBehaviour
         StopTimer();
         float animationSpeed = 0f;
         rewindFeedback.SetBool("Rewind", true);
-
+        uiManager.RewindOverlayFeedback(true);
         for (int i = 0; i < characterMovements.Count; i++)
         {
             characterMovements[i].SetAnimationSpeed(animationSpeed);
@@ -353,6 +353,7 @@ public class GameManagerController : MonoBehaviour
         }
 
         rewindFeedback.SetBool("Rewind", false);
+        uiManager.RewindOverlayFeedback(false);
         for (int i = 0; i < characterMovements.Count; i++)
         {
             characterMovements[i].SetAnimationSpeed(1);

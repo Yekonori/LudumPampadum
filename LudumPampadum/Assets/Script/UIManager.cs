@@ -22,6 +22,9 @@ public class UIManager : MonoBehaviour
     public Button reloadButton;
     public Button startButton;
 
+
+    [SerializeField] private Animator overlayFeedback;
+
     #endregion
 
     public void DrawTimer(float time, float maxTime)
@@ -42,4 +45,13 @@ public class UIManager : MonoBehaviour
     {
         textEntityNumber.text = entityNumber.ToString();
     }
+
+
+
+    public void RewindOverlayFeedback(bool b)
+    {
+        overlayFeedback.SetBool("FeedbackOn", b);
+    }
+
+
 }

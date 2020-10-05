@@ -28,6 +28,8 @@ public class CharacterMovement : MonoBehaviour
     float speed = 10;
     [SerializeField]
     float joystick = 10;
+    [SerializeField]
+    Vector3 gravity = new Vector3(0, -10f, 0);
 
     [Header("Record")]
     [SerializeField]
@@ -119,6 +121,8 @@ public class CharacterMovement : MonoBehaviour
         {
             ReplayUpdate();
         }
+        if (characterController.isGrounded == false)
+            characterController.Move(gravity * Time.deltaTime);
     }
 
     /// <summary>

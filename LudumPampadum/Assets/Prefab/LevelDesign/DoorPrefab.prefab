@@ -172,7 +172,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1948173299762564027}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,6 +218,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Door_Particules (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5383854767994988865, guid: 6f2a09fa058b11e4da38723495bd19d7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6334844150902719130, guid: 6f2a09fa058b11e4da38723495bd19d7,
         type: 3}
@@ -288,6 +293,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7901664042920036465, guid: 6f2a09fa058b11e4da38723495bd19d7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7901664042920036467, guid: 6f2a09fa058b11e4da38723495bd19d7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7901664042920036469, guid: 6f2a09fa058b11e4da38723495bd19d7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7901664042920036471, guid: 6f2a09fa058b11e4da38723495bd19d7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7901664042920036493, guid: 6f2a09fa058b11e4da38723495bd19d7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7901664042920036495, guid: 6f2a09fa058b11e4da38723495bd19d7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8338490742148736205, guid: 6f2a09fa058b11e4da38723495bd19d7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f2a09fa058b11e4da38723495bd19d7, type: 3}

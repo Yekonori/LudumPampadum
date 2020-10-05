@@ -12,6 +12,9 @@ public class MainMenu : MonoBehaviour
     public GameObject selectLevel;
     public GameObject _returnButton;
     [Space]
+    public GameObject controlLevel;
+    public GameObject _returnButtonControl;
+    [Space]
     public GameObject creditPanel;
     public GameObject _returnButton2;
 
@@ -33,6 +36,7 @@ public class MainMenu : MonoBehaviour
         mainPanel.SetActive(true);
         selectLevel.SetActive(false);
         creditPanel.SetActive(false);
+        controlLevel.SetActive(false);
         _eventSystem.SetSelectedGameObject(_playButton);
         SoundSelect();
     }
@@ -43,6 +47,16 @@ public class MainMenu : MonoBehaviour
         selectLevel.SetActive(true);
         creditPanel.SetActive(false);
         _eventSystem.SetSelectedGameObject(_returnButton);
+        SoundSelect();
+    }
+
+    public void DisplayControls()
+    {
+        mainPanel.SetActive(false);
+        selectLevel.SetActive(false);
+        creditPanel.SetActive(false);
+        controlLevel.SetActive(true);
+        _eventSystem.SetSelectedGameObject(_returnButtonControl);
         SoundSelect();
     }
 
