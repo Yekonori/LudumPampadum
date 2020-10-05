@@ -18,11 +18,11 @@ EditorBuildSettings:
     path: Assets/Scene/LD_MARK/LD_MARK_3.unity
     guid: 60e5dd2e5ff514384bf99cbae28b825e
   - enabled: 1
-    path: Assets/Scene/LD_MARK/LD_MARK_4.unity
-    guid: 5526f80e6b876497e98ef6e49cb79be6
-  - enabled: 1
     path: Assets/Scene/LevelEloi1.unity
     guid: 83448a5be2f2d4b17a72cef31f8c4bbe
+  - enabled: 1
+    path: Assets/Scene/LD_MARK/LD_MARK_4.unity
+    guid: 5526f80e6b876497e98ef6e49cb79be6
   - enabled: 1
     path: Assets/Scene/testAlexis.unity
     guid: 0cc7ac09e97806948b0e53c0f8b1aa88

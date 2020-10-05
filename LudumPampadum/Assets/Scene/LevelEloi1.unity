@@ -13276,6 +13276,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5637094341343571383, guid: 2859642c29ec43d4c84d0a83e4b4342c,
+        type: 3}
+      propertyPath: OnEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: LD_MARK_4
+      objectReference: {fileID: 0}
     - target: {fileID: 5692017394369347993, guid: 2859642c29ec43d4c84d0a83e4b4342c,
         type: 3}
       propertyPath: m_LocalPosition.z

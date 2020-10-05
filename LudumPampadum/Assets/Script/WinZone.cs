@@ -16,7 +16,24 @@ public class WinZone : MonoBehaviour
 
     private IEnumerator LoadZoneCoroutine(string nextLevel)
     {
-        Camera.main.GetComponent<Animator>().SetTrigger("Feedback");
+        Animator anim = Camera.main.GetComponent<Animator>();
+        if(anim != null)
+            anim.SetTrigger("Feedback");
+        fadeScreenAnim.SetTrigger("Feedback");
+        yield return new WaitForSeconds(1.4f);
+        SceneManager.LoadScene(nextLevel);
+    }
+
+    public void LoadNextZone(int nextLevel)
+    {
+        StartCoroutine(LoadZoneCoroutine(nextLevel));
+    }
+
+    private IEnumerator LoadZoneCoroutine(int nextLevel)
+    {
+        Animator anim = Camera.main.GetComponent<Animator>();
+        if (anim != null)
+            anim.SetTrigger("Feedback");
         fadeScreenAnim.SetTrigger("Feedback");
         yield return new WaitForSeconds(1.4f);
         SceneManager.LoadScene(nextLevel);
