@@ -34,6 +34,7 @@ public class MainMenu : MonoBehaviour
         selectLevel.SetActive(false);
         creditPanel.SetActive(false);
         _eventSystem.SetSelectedGameObject(_playButton);
+        SoundSelect();
     }
 
     public void DisplaySelectionLevel()
@@ -42,6 +43,7 @@ public class MainMenu : MonoBehaviour
         selectLevel.SetActive(true);
         creditPanel.SetActive(false);
         _eventSystem.SetSelectedGameObject(_returnButton);
+        SoundSelect();
     }
 
     public void DisplayCredit()
@@ -50,11 +52,13 @@ public class MainMenu : MonoBehaviour
         selectLevel.SetActive(false);
         creditPanel.SetActive(true);
         _eventSystem.SetSelectedGameObject(_returnButton2);
+        SoundSelect();
     }
 
     public void StartGame(int sceneIndex)
     {
         Debug.Log("Starting level " + sceneIndex);
+        SoundSelect();
         SceneManager.LoadScene(sceneIndex);
     }
 
@@ -65,6 +69,11 @@ public class MainMenu : MonoBehaviour
 #else
     Application.Quit();
 #endif
+    }
+
+    public void SoundSelect()
+    {
+        AudioManager.instance.Play("SFX_Select", true);
     }
 }
 

@@ -177,6 +177,7 @@ public class GameManagerController : MonoBehaviour
         characterMovements.Add(newPlayer);
 
         uiManager.DrawEntity(maxGhost - (characterMovements.Count - 1));
+        AudioManager.instance.Play("SFX_Spawn", false);
 
         camera.SetFocus(newPlayer.transform);
     }
@@ -321,6 +322,8 @@ public class GameManagerController : MonoBehaviour
             canPlay = false;
             characterMovements[characterMovements.Count - 1].RewindReplay();
             StartCoroutine(RewindTimeCoroutine());
+            AudioManager.instance.Play("SFX_Rewind_Start", false);
+            AudioManager.instance.Play("SFX_Rewinding", false);
         }
     }
 
@@ -370,6 +373,8 @@ public class GameManagerController : MonoBehaviour
         }
 
         canPlay = true;
+        AudioManager.instance.Stop("SFX_Rewinding");
+        AudioManager.instance.Play("SFX_Rewind_End", false);
     }
 
     #endregion

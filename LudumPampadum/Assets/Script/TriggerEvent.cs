@@ -42,4 +42,21 @@ public class TriggerEvent : MonoBehaviour
     }
 
     #endregion
+
+    public void SoundDoorEnter()
+    {
+        AudioManager.instance.Play("SFX_Pressure", true);
+        AudioManager.instance.Play("SFX_Door_Open", false);
+    }
+
+    public void SoundDoorExit()
+    {
+        AudioManager.instance.Play("SFX_Door_Close", false);
+    }
+
+    public void SoundDead()
+    {
+        AudioManager.instance.Play("SFX_Dead", false);
+    }
+
 }

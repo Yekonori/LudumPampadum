@@ -348,6 +348,12 @@ public class CharacterMovement : MonoBehaviour
         return Vector3.Lerp(positions[currentNode].Positions, positions[currentNode - 1].Positions, t);
     }
 
-
+    public void SoundRewind(bool active)
+    {
+        if (active)
+            AudioManager.instance.Play("SFX_Rewind_Play", false);
+        else
+            AudioManager.instance.Play("SFX_Rewind_Pause", false);
+    }
 
 }
