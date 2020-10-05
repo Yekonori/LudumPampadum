@@ -368,10 +368,10 @@ public class CharacterMovement : MonoBehaviour
 
     public void SoundRewind(bool active)
     {
-        if (active)
+        /*if (active)
             AudioManager.instance.Play("SFX_Rewind_Play", false);
         else
-            AudioManager.instance.Play("SFX_Rewind_Pause", false);
+            AudioManager.instance.Play("SFX_Rewind_Pause", false);*/
     }
 
 }
