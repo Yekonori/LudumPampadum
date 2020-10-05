@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using UnityEngine.Rendering;
+using UnityEngine.EventSystems;
 
 public class GameManagerController : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class GameManagerController : MonoBehaviour
 
     private float fastForward = 1f;
     private bool canPlay = true;
+    private bool pause = false;
     List<CharacterMovement> characterMovements = new List<CharacterMovement>();
 
     Vector2 input;
@@ -79,6 +81,7 @@ public class GameManagerController : MonoBehaviour
 
         uiManager.DrawEntity(maxGhost);
         camera.SetFocus(characterMovements[0].transform);
+        camera.transform.position = characterMovements[0].transform.position;
     }
 
     private void Update()
@@ -92,22 +95,12 @@ public class GameManagerController : MonoBehaviour
         }
     }
 
-    /* private void FixedUpdate()
-     {
-         if (_canTimerRun)
-         {
-             _currentTurnTimer -= Time.fixedDeltaTime;
-             UpdateTimer();
-             CheckEndTimer();
-         }
-     }*/
-
 
     private void UpdateController()
     {
         if(canPlay == true)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
                 CastRayWorld();
             else
             {
@@ -134,7 +127,38 @@ public class GameManagerController : MonoBehaviour
                 else if (Input.GetButtonUp("Fire1"))
                     StopTimer();
 
+                if(Input.GetButtonDown("Cancel"))
+                {
+                    Pause();
+                }
+
             }
+        }
+        else if (pause == true)
+        {
+            if (Input.GetButtonDown("Cancel"))
+            {
+                Pause();
+
+            }
+        }
+    }
+
+    public void Pause()
+    {
+        if(pause == true)
+        {
+            Time.timeScale = 1;
+            canPlay = true;
+            pause = false;
+            uiManager.ActivatePause(false);
+        }
+        else
+        {
+            Time.timeScale = 0;
+            canPlay = false;
+            pause = true;
+            uiManager.ActivatePause(true);
         }
     }
 

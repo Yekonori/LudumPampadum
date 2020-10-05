@@ -71,7 +71,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame(int sceneIndex)
     {
-        Debug.Log("Starting level " + sceneIndex);
+        //Debug.Log("Starting level " + sceneIndex);
         SoundSelect();
         SceneManager.LoadScene(sceneIndex);
     }
