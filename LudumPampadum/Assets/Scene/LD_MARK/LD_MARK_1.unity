@@ -6397,6 +6397,11 @@ PrefabInstance:
       propertyPath: turnTimer
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1732259967787181520, guid: d083dd93260f1ad45b10f954bb9f3938,
+        type: 3}
+      propertyPath: maxGhost
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1732259967787181521, guid: d083dd93260f1ad45b10f954bb9f3938,
         type: 3}
       propertyPath: m_LocalPosition.x
