@@ -2,6 +2,7 @@
 using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using System.Collections;
 
 public class AudioManager : MonoBehaviour
 {
@@ -38,7 +39,7 @@ public class AudioManager : MonoBehaviour
 
         foreach (Sound s in sounds)
         {
-            s.source = gameObject.AddComponent<AudioSource>();
+            s.source = gameObject.AddComponent<AudioSource>(); // ça c'est pas bien c'est pas performant du tout
             s.source.clip = s.clip;
             if (s.isMusic)
                 s.source.outputAudioMixerGroup = MusicMixer;
@@ -50,14 +51,14 @@ public class AudioManager : MonoBehaviour
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
         }
+
+        PlayMusic();
     }
 
-    public void IntiAudio(int sceneId)
+    void PlayMusic()
     {
-        PlayLevelMusic(sceneId);
+        Play("Music", false);
     }
-
-    void PlayLevelMusic(int id){}
 
     public void Play (string name, bool pitch)
     {
@@ -155,5 +156,48 @@ public class AudioManager : MonoBehaviour
     {
         soundVolume = value;
         Mixer.SetFloat("SoundVolume", soundVolume);
+    }
+
+
+    private IEnumerator pitchCoroutine;
+    public void MusicPitchEffectOn()
+    {
+        if (pitchCoroutine != null)
+            StopCoroutine(pitchCoroutine);
+        pitchCoroutine = PitchCoroutineOn();
+        StartCoroutine(pitchCoroutine);
+    }
+
+    private IEnumerator PitchCoroutineOn()
+    {
+        Sound s = Array.Find(sounds, sound => sound.isMusic == true);
+        AudioSource audioSource = s.source;
+        audioSource.pitch += 0.5f;
+        while (audioSource.pitch > -1.1f)
+        {
+            audioSource.pitch -= 0.05f;
+            yield return null;
+        }
+    }
+
+    public void MusicPitchEffectOff()
+    {
+        if (pitchCoroutine != null)
+            StopCoroutine(pitchCoroutine);
+        pitchCoroutine = PitchCoroutineOff();
+        StartCoroutine(pitchCoroutine);
+    }
+    private IEnumerator PitchCoroutineOff()
+    {
+        Sound s = Array.Find(sounds, sound => sound.isMusic == true);
+        AudioSource audioSource = s.source;
+        float pitchOrigin = audioSource.pitch;
+        float t = 0f;
+        while (t<1f)
+        {
+            t += Time.deltaTime * 3;
+            audioSource.pitch = Mathf.Lerp(pitchOrigin, 1, t);
+            yield return null;
+        }
     }
 }

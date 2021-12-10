@@ -6,6 +6,21 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: d1c3109bdb54ad54c8a2b2838528e640
+    path: Assets/Scene/MainMenu.unity
+    guid: f7c4a61991c6d7f45b7bc90851143c35
+  - enabled: 1
+    path: Assets/Scene/LD_MARK/LD_MARK_1.unity
+    guid: 2c9d1740b699d434996d67577afd4311
+  - enabled: 1
+    path: Assets/Scene/LD_MARK/LD_MARK_2.unity
+    guid: c3bcdfdc16ef34871b99ce91f558418c
+  - enabled: 1
+    path: Assets/Scene/LD_MARK/LD_MARK_3.unity
+    guid: 60e5dd2e5ff514384bf99cbae28b825e
+  - enabled: 1
+    path: Assets/Scene/LevelEloi1.unity
+    guid: 83448a5be2f2d4b17a72cef31f8c4bbe
+  - enabled: 1
+    path: Assets/Scene/LD_MARK/LD_MARK_4.unity
+    guid: 5526f80e6b876497e98ef6e49cb79be6
   m_configObjects: {}
